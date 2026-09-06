@@ -1,11 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Strawberry boom · Правила</title>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --strawberry: #ff2d55;
@@ -87,7 +86,7 @@
             75% { transform: translateY(15px) rotate(-4deg) scale(0.95); }
         }
 
-        /* ========== МАСШТАБНАЯ ПОСТОЯННАЯ АНИМАЦИЯ: ГИГАНТСКАЯ КЛУБНИКА НА ФОНЕ ========== */
+        /* ========== МАСШТАБНАЯ ПОСТОЯННАЯ АНИМАЦИЯ: ГИГАНТСКАЯ КЛУБНИКА ========== */
         .giant-berry {
             position: fixed;
             top: 50%;
@@ -97,7 +96,7 @@
             height: 720px;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.12;
+            opacity: 0.15;
             animation: giantRotate 20s linear infinite, giantPulse 5s ease-in-out infinite;
             filter: drop-shadow(0 0 60px rgba(255, 45, 85, 0.5));
         }
@@ -108,8 +107,8 @@
         }
 
         @keyframes giantPulse {
-            0%, 100% { opacity: 0.12; scale: 1; }
-            50% { opacity: 0.22; scale: 1.1; }
+            0%, 100% { opacity: 0.15; scale: 1; }
+            50% { opacity: 0.25; scale: 1.1; }
         }
 
         /* ========== СЛЕД ПРИ ДВИЖЕНИИ ========== */
@@ -174,9 +173,8 @@
         }
 
         .title {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Caveat', cursive;
             font-weight: 700;
-            font-style: italic;
             font-size: 4rem;
             line-height: 1.15;
             letter-spacing: -0.01em;
@@ -239,7 +237,7 @@
         }
 
         .section-number {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Caveat', cursive;
             font-size: 2.2rem;
             font-weight: 700;
             color: var(--strawberry);
@@ -248,8 +246,8 @@
         }
 
         .section-title-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.9rem;
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
             font-weight: 700;
             letter-spacing: 0.2px;
             color: #b3002d;
@@ -330,9 +328,9 @@
         }
 
         .rule-title {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Caveat', cursive;
             font-weight: 700;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #b3002d;
             margin-bottom: 0.3rem;
             letter-spacing: 0.2px;
@@ -420,13 +418,13 @@
                 font-size: 2.5rem;
             }
             .section-title-text {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
             .section-number {
                 font-size: 1.8rem;
             }
             .rule-title {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
             .rule-card {
                 padding: 1rem;
@@ -761,5 +759,4 @@
         })();
     </script>
 </body>
-</html>
-```
+                                                                         </html>
