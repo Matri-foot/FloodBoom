@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Правила</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>🍓 Мерцающий Клубничный Милкшейк · Правила</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
             --strawberry-red: #ff3355;
@@ -13,9 +13,20 @@
             --deep-pink: #ff1493;
             --gold: #ffd700;
             --leaf-green: #32cd32;
-            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-bg: rgba(255, 255, 255, 0.2);
             --glass-border: rgba(255, 255, 255, 0.4);
             --shadow: 0 8px 32px rgba(255, 51, 85, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.25);
+            --card-hover-bg: rgba(255, 255, 255, 0.45);
+            --text-dark: #4a0012;
+            --text-accent: #b3002d;
+            --glow-pink: #ff5c8a;
+            --glow-gold: #ffe5b4;
+            --mint-leaf: #a8e6cf;
+            --berry-shadow: #b3133b;
+            --gold-shine: #ffe5b4;
+            --card-radius: 1.5rem;
+            --transition-speed: 0.4s;
         }
 
         * {
@@ -26,9 +37,8 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #ffe4e1, #ffb6c1, #ff69b4, #ff1493);
-            background-size: 400% 400%;
-            animation: bgShift 15s ease infinite;
+            background: radial-gradient(ellipse at 50% 50%, #ffe4e1 0%, #ffb6c1 30%, #ff69b4 60%, #d63384 100%);
+            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -36,230 +46,436 @@
             padding: 2rem;
             position: relative;
             overflow-x: hidden;
-            color: #4a0012;
+            color: var(--text-dark);
+            perspective: 1200px;
         }
 
-        @keyframes bgShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .floating-strawberries {
+        #particleCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: 0;
             pointer-events: none;
+            opacity: 0.9;
+        }
+
+        .bg-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
+            pointer-events: none;
             overflow: hidden;
         }
 
-        .floating-strawberry {
+        .strawberry-3d {
             position: absolute;
-            font-size: 2rem;
-            animation: floatUp linear infinite;
-            opacity: 0.7;
-            filter: drop-shadow(0 0 10px rgba(255, 51, 85, 0.8));
+            width: 200px;
+            height: 200px;
+            right: 5%;
+            top: 15%;
+            transform-style: preserve-3d;
+            animation: rotateBerry 20s infinite linear;
+            filter: drop-shadow(0 20px 30px rgba(180, 20, 70, 0.6));
         }
 
-        @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) rotate(0deg) scale(0.8);
-                opacity: 0;
-            }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% {
-                transform: translateY(-10vh) rotate(360deg) scale(1.2);
-                opacity: 0;
-            }
+        .strawberry-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, #ff6b8a, #ff3355 50%, #b3133b 90%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform: rotateX(15deg) rotateY(0deg);
+            box-shadow: inset -20px -20px 40px rgba(0,0,0,0.3), inset 10px 10px 30px rgba(255,255,255,0.4);
         }
 
-        .glitter {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            background: var(--gold);
+        .strawberry-seed {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffd700;
             border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            animation: sparkle linear infinite;
-            box-shadow: 0 0 12px 2px var(--gold);
+            box-shadow: 0 0 5px #fff;
+            animation: seedGlow 2s infinite alternate;
         }
 
-        @keyframes sparkle {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        .seed1 { top: 20%; left: 30%; }
+        .seed2 { top: 30%; left: 60%; }
+        .seed3 { top: 50%; left: 25%; }
+        .seed4 { top: 60%; left: 70%; }
+        .seed5 { top: 40%; left: 80%; }
+        .seed6 { top: 70%; left: 40%; }
+        .seed7 { top: 25%; left: 50%; }
+        .seed8 { top: 55%; left: 55%; }
+
+        @keyframes rotateBerry {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            25% { transform: rotateX(10deg) rotateY(90deg); }
+            50% { transform: rotateX(0deg) rotateY(180deg); }
+            75% { transform: rotateX(-10deg) rotateY(270deg); }
+            100% { transform: rotateX(0deg) rotateY(360deg); }
+        }
+
+        @keyframes seedGlow {
+            0% { box-shadow: 0 0 3px #fff, 0 0 5px #ffd700; }
+            100% { box-shadow: 0 0 10px #fff, 0 0 20px #ffd700; }
         }
 
         .main-container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: var(--shadow), 0 0 60px rgba(255, 20, 147, 0.2);
+            border-radius: 3rem;
+            padding: 3rem 2.5rem;
+            box-shadow: var(--shadow), 0 0 80px rgba(255, 20, 147, 0.3);
             position: relative;
-            z-index: 2;
-            animation: containerAppear 1s ease-out;
+            z-index: 10;
+            animation: containerAppear 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .main-container:hover {
+            transform: translateY(-5px) scale(1.01);
         }
 
         @keyframes containerAppear {
-            0% { opacity: 0; transform: scale(0.9) translateY(30px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+            0% { opacity: 0; transform: translateY(50px) scale(0.9) rotateX(10deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotateX(0deg); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .title {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff0f5, #ffb6c1, #ff3355, #ff1493, #fff0f5);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleGradient 6s ease infinite, titleFloat 4s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 51, 85, 0.8);
+            position: relative;
+            display: inline-block;
+            transform-style: preserve-3d;
+        }
+
+        .title::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -20px;
+            right: -20px;
+            bottom: -10px;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(20px);
+            z-index: -1;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-2deg); }
+            75% { transform: translateY(5px) rotate(2deg); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.9), 0 0 40px rgba(255, 51, 85, 0.7);
+            margin-top: -10px;
+            animation: subtitleShine 5s linear infinite;
+        }
+
+        @keyframes subtitleShine {
+            0% { text-shadow: 0 0 20px rgba(255, 20, 147, 0.9), 0 0 40px rgba(255, 51, 85, 0.7); }
+            50% { text-shadow: 0 0 40px rgba(255, 255, 255, 1), 0 0 80px rgba(255, 20, 147, 1); }
+            100% { text-shadow: 0 0 20px rgba(255, 20, 147, 0.9), 0 0 40px rgba(255, 51, 85, 0.7); }
         }
 
         .section {
             margin-bottom: 2.5rem;
-            animation: fadeInUp 0.8s ease forwards;
             opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-
-        .section:nth-child(1) { animation-delay: 0.2s; }
-        .section:nth-child(2) { animation-delay: 0.4s; }
-        .section:nth-child(3) { animation-delay: 0.6s; }
 
         .section-title {
             font-family: 'Pacifico', cursive;
-            font-size: 2.2rem;
-            color: var(--strawberry-red);
-            text-shadow: 0 0 20px rgba(255, 51, 85, 0.8), 0 0 40px rgba(255, 20, 147, 0.5);
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 0 0 15px #ff3355, 0 0 30px #ff1493, 0 0 45px #ff3355;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            animation: titlePulse 2s ease-in-out infinite;
+            gap: 0.8rem;
+            position: relative;
         }
 
-        @keyframes titlePulse {
-            0%, 100% { text-shadow: 0 0 20px rgba(255, 51, 85, 0.8), 0 0 40px rgba(255, 20, 147, 0.5); }
-            50% { text-shadow: 0 0 30px rgba(255, 51, 85, 1), 0 0 60px rgba(255, 20, 147, 0.8); }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 3px;
+            background: linear-gradient(90deg, #ff3355, transparent);
+            border-radius: 3px;
+            animation: lineExtend 2s ease-out forwards;
+            transform-origin: left;
+        }
+
+        @keyframes lineExtend {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
         }
 
         .section-content {
-            background: rgba(255, 255, 255, 0.3);
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 2rem;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1), inset 0 0 30px rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-speed);
+        }
+
+        .section-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.05), transparent);
+            animation: rotateGlow 8s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .rule-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 1.5rem;
             padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3), 0 4px 15px rgba(255, 51, 85, 0.2);
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.5);
+            border-left: 8px solid var(--strawberry-red);
+            box-shadow: 0 8px 20px rgba(255, 51, 85, 0.2), inset 0 0 20px rgba(255,255,255,0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
         }
 
-        .rule-item {
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 1rem;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-            border-left: 5px solid var(--strawberry-red);
-            animation: ruleGlow 3s ease-in-out infinite alternate;
+        .rule-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 300%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: skewX(-20deg);
+            animation: cardShine 6s infinite;
         }
 
-        @keyframes ruleGlow {
-            0% { box-shadow: 0 0 15px rgba(255, 51, 85, 0.3); }
-            100% { box-shadow: 0 0 30px rgba(255, 20, 147, 0.6); }
+        @keyframes cardShine {
+            0% { left: -100%; }
+            60%, 100% { left: 200%; }
         }
 
-        .rule-item:hover {
-            transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.6);
-            border-left-width: 10px;
+        .rule-card:hover {
+            transform: translateX(15px) rotateY(2deg) rotateX(1deg) scale(1.02);
+            background: var(--card-hover-bg);
+            border-left-width: 15px;
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.5), 0 0 30px rgba(255, 51, 85, 0.6);
         }
 
         .rule-title {
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #b3002d;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
+            letter-spacing: 0.5px;
         }
 
         .rule-text {
             font-size: 1rem;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #4a0012;
+            font-weight: 500;
         }
 
         .punishment {
             margin-top: 0.8rem;
-            padding: 0.4rem 0.8rem;
-            background: rgba(255, 51, 85, 0.2);
-            border-radius: 0.5rem;
-            font-weight: 600;
-            color: #b3002d;
             display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(255, 51, 85, 0.25);
+            border-radius: 2rem;
+            font-weight: 700;
+            color: #b3002d;
+            border: 1px solid rgba(255, 51, 85, 0.5);
+            box-shadow: 0 0 10px rgba(255, 51, 85, 0.3);
+            animation: punishGlow 2s infinite alternate;
+        }
+
+        @keyframes punishGlow {
+            0% { box-shadow: 0 0 5px rgba(255, 51, 85, 0.3); }
+            100% { box-shadow: 0 0 25px rgba(255, 51, 85, 0.8); }
         }
 
         ul, ol {
-            margin-left: 1.5rem;
+            margin-left: 1.8rem;
             margin-bottom: 1rem;
         }
 
         li {
             margin-bottom: 0.5rem;
+            position: relative;
+            list-style-type: none;
+        }
+
+        li::before {
+            content: '•';
+            color: #ff3355;
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5em;
+            margin-left: -1.5em;
+            font-size: 1.2em;
         }
 
         .info-icon {
-            font-size: 1.5rem;
-            animation: spin 3s linear infinite;
+            font-size: 2rem;
+            display: inline-block;
+            animation: spin 4s linear infinite;
+            color: #fff;
+            text-shadow: 0 0 15px #ff3355;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.3); }
+            100% { transform: rotate(360deg) scale(1); }
         }
 
-        .milkshake-emoji {
+        .milkshake-icon {
             display: inline-block;
-            animation: bounce 1.5s ease infinite;
+            font-size: 2.5rem;
+            animation: bounce 2s ease infinite;
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
         }
 
-        @media (max-width: 600px) {
+        .wave {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C300,100 600,0 900,80 C1000,120 1100,60 1200,0 L1200,120 L0,120 Z' fill='%23ffb6c1' opacity='0.5'/%3E%3C/svg%3E");
+            background-size: cover;
+            z-index: 5;
+            pointer-events: none;
+            animation: waveMove 8s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 700px) {
             .main-container {
-                padding: 1.5rem;
-                border-radius: 1.5rem;
+                padding: 1.8rem;
+                border-radius: 2rem;
+            }
+            .title {
+                font-size: 2.5rem;
             }
             .section-title {
                 font-size: 1.8rem;
+            }
+            .strawberry-3d {
+                width: 120px;
+                height: 120px;
+                right: 0;
+                top: 5%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="floating-strawberries" id="floatingStrawberries"></div>
-    <div class="glitter" style="left: 5%; animation-duration: 7s; animation-delay: 0s;"></div>
-    <div class="glitter" style="left: 15%; animation-duration: 9s; animation-delay: 1s;"></div>
-    <div class="glitter" style="left: 25%; animation-duration: 6s; animation-delay: 2s;"></div>
-    <div class="glitter" style="left: 35%; animation-duration: 8s; animation-delay: 0.5s;"></div>
-    <div class="glitter" style="left: 45%; animation-duration: 10s; animation-delay: 1.5s;"></div>
-    <div class="glitter" style="left: 55%; animation-duration: 7s; animation-delay: 2.5s;"></div>
-    <div class="glitter" style="left: 65%; animation-duration: 9s; animation-delay: 0.8s;"></div>
-    <div class="glitter" style="left: 75%; animation-duration: 6s; animation-delay: 1.8s;"></div>
-    <div class="glitter" style="left: 85%; animation-duration: 8s; animation-delay: 3s;"></div>
-    <div class="glitter" style="left: 95%; animation-duration: 11s; animation-delay: 0.3s;"></div>
+    <canvas id="particleCanvas"></canvas>
+    <div class="bg-3d">
+        <div class="strawberry-3d">
+            <div class="strawberry-body"></div>
+            <div class="strawberry-seed seed1"></div>
+            <div class="strawberry-seed seed2"></div>
+            <div class="strawberry-seed seed3"></div>
+            <div class="strawberry-seed seed4"></div>
+            <div class="strawberry-seed seed5"></div>
+            <div class="strawberry-seed seed6"></div>
+            <div class="strawberry-seed seed7"></div>
+            <div class="strawberry-seed seed8"></div>
+        </div>
+    </div>
+    <div class="wave"></div>
 
-    <div class="main-container">
-        <div class="section age-confirmation">
+    <div class="main-container" id="mainContainer">
+        <div class="header">
+            <h1 class="title">Мерцающий клубничный милкшейк</h1>
+            <p class="subtitle">~ Правила сладкого общения ~</p>
+        </div>
+
+        <div class="section" id="age-section">
             <div class="section-title">
-                <span class="milkshake-emoji">🥤</span> Перед вступлением
+                <span class="milkshake-icon">🥤</span> Перед вступлением
             </div>
             <div class="section-content">
                 <p>Перед вступлением требуется подтверждение возраста. Пришлите фото одного из документов:</p>
@@ -280,113 +496,98 @@
             </div>
         </div>
 
-        <div class="section purpose">
+        <div class="section" id="purpose-section">
             <div class="section-title">
-                <span class="milkshake-emoji">🍓</span> Цель этого флуда
+                <span class="milkshake-icon">🍓</span> Цель этого флуда
             </div>
             <div class="section-content">
                 <p>Цель этого флуда – приятное, безопасное и весёлое общение. Мы ценим уважение, юмор и поддержку друг друга. Любое поведение, которое портит атмосферу остальным, может быть наказано, даже если оно напрямую не прописано в правилах.</p>
             </div>
         </div>
 
-        <div class="section rules">
+        <div class="section" id="rules-section">
             <div class="section-title">
-                <span class="milkshake-emoji">🧁</span> Основные правила
+                <span class="milkshake-icon">🧁</span> Основные правила
             </div>
             <div class="section-content">
-                <div class="rule-item">
+                <!-- Карточки правил будут генерироваться JS, либо мы вставим вручную для наглядности? но лучше вручную, чтобы больше текста, но можно и генерировать. Для полного контроля вставим вручную. -->
+                <div class="rule-card">
                     <div class="rule-title">0. Незнание правил</div>
                     <div class="rule-text">Незнание правил не освобождает от ответственности и не является оправданием за их нарушение.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">1. Норма активности</div>
                     <div class="rule-text">Норма – 75 сообщений в неделю. Чистка происходит каждое воскресенье в 23:00 (По МСК). 0-59 сообщений – бан. 60-74 сообщения – варн на месяц.</div>
                     <div class="rule-text"><strong>1.1.</strong> Во время «каникул» в проекте норма снижается. 0-39 – бан. 40-49 – варн на месяц. Статус проекта указывается в посте навигации с датой окончания «каникул».</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">2. Голосовые сообщения</div>
                     <div class="rule-text">Запрещены голосовые сообщения со звуками, которые могут быть неприятны другим (рыгание, скрипы, крики, громкие внезапные звуки и т.п.). Слишком громкие войсы – просьба предупреждать заранее.</div>
                     <div class="punishment">Наказание: Варн на неделю.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">3. Спам и флуд</div>
                     <div class="rule-text">Запрещён спам. К нему относится: 5 и более одинаковых сообщений подряд, «лесенка», более 20 обычных сообщений подряд без реакции других участников, чрезмерное использование эмодзи, стикеров и GIF (более 7 штук без текста), флуд одинаковыми картинками.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">4. Конфликты и ссоры</div>
                     <div class="rule-text">Ссоры, конфликты, троллинг, провокации и пассивная агрессия запрещены в чате. Все разборки решаются только в личных сообщениях. Если конфликт произошёл в чате – наказание получают все участвующие стороны.</div>
                     <div class="punishment">Наказание: варн на неделю + мут на час.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">5. Уважение к участникам</div>
                     <div class="rule-text">Мы приветствуем уважение ко всем участникам независимо от их сексуальной ориентации, гендерной идентичности, внешности, национальности, религии или других личных особенностей. Оскорбления, унижения, дискриминация и агрессия по любому признаку запрещены. Агрессия в ответ на чужое мнение также не приветствуется.</div>
                     <div class="punishment">Наказание: варн на месяц (или бан в тяжёлых случаях).</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">6. Конфиденциальность и чужая информация</div>
                     <div class="rule-text">Запрещено распространение чужой личной информации и насильное нарушение конфиденциальности. Запрещено устраивать спам в чьи-то личные сообщения из-за ссоры, а так же инициировать рейды в другие проекты. Запрещено публиковать скриншоты личных переписок без согласия всех упомянутых лиц (кроме случаев нарушения правил).</div>
                     <div class="punishment">Наказание: варн на месяц.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">7. Запрещённая пропаганда</div>
                     <div class="rule-text">Запрещена пропаганда и поощрение: расстройств пищевого поведения (РПП), самоповреждений, самолечения, опасных диет и практик, наркотиков, алкоголя и других веществ, политических и моральных взглядов в агрессивной форме.</div>
                     <div class="punishment">Наказание: варн на месяц.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">8. Созывы</div>
                     <div class="rule-text">Создавать созывы (массовые упоминание) без разрешения владельца или администрации запрещено.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">9. Реклама</div>
                     <div class="rule-text">Любая реклама без предварительного разрешения владельца запрещена (проекты в тг, ютубе и других соцсетях, даже если они не принадлежат вам). Все рекламные вопросы решаются только в личных сообщениях с владельцем.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">10. 18+ контент</div>
                     <div class="rule-text">Порнография, gore (расчленёнка), шок-контент и чрезмерно жестокие материалы полностью запрещены.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">11. Приветствие новичков</div>
                     <div class="rule-text">Запрещено встречать участников фразами «Фу, нью», «Выйди», «Кто это», пошлыми шутками и стикерами с подобным содержанием. Каждый, кто вступил, автоматически считается частью проекта. Такие слова могут обидеть и отпугнуть человека.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">12. Рест и просьбы</div>
                     <div class="rule-text">Просьбы поставить в рест принимаются только в личных сообщениях владельца. Просьбы в общем чате будут игнорироваться или отправлять вас заново читать правила.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">13. «Если не уверены»</div>
                     <div class="rule-text">Если вы хотите что-то сделать, но не знаете, разрешено ли это – лучше сначала спросить у владельца или бота. «Я не знал» не является оправданием за нарушение.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">14. Вступление</div>
                     <div class="rule-text">Вступить можно через личные сообщения владельца или через бот (в случае бана).</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">15. Полномочия администрации</div>
                     <div class="rule-text">Администрация имеет право удвоить варны или выдать бан сразу, если посчитает ситуацию серьёзной.</div>
                     <div class="rule-text"><strong>15.1.</strong> Бан выдаётся после накопления пяти варнов.</div>
                 </div>
-
-                <div class="rule-item">
+                <div class="rule-card">
                     <div class="rule-title">16. О проекте</div>
                     <div class="rule-text">Проект существует с 28 октября 2023 года. 28 апреля 2026 года началась новая эра: чат и все связанные каналы были полностью обновлены и оформлены заново.</div>
                 </div>
@@ -395,18 +596,201 @@
     </div>
 
     <script>
-        const strawberryContainer = document.getElementById('floatingStrawberries');
-        const strawberryEmojis = ['🍓', '🍓', '🍓', '🥤', '🧁', '🍰', '🍨', '🍧'];
-        for (let i = 0; i < 15; i++) {
-            const span = document.createElement('span');
-            span.classList.add('floating-strawberry');
-            span.textContent = strawberryEmojis[Math.floor(Math.random() * strawberryEmojis.length)];
-            span.style.left = Math.random() * 100 + '%';
-            span.style.animationDuration = (Math.random() * 10 + 8) + 's';
-            span.style.animationDelay = (Math.random() * 5) + 's';
-            span.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
-            strawberryContainer.appendChild(span);
-        }
+        (function() {
+            // === Canvas Particle System ===
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            const mouse = { x: -1000, y: -1000 };
+            const particleCount = 80;
+
+            function resizeCanvas() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.size = Math.random() * 6 + 2;
+                    this.speedX = (Math.random() - 0.5) * 1.5;
+                    this.speedY = (Math.random() - 0.5) * 1.5 + 0.3;
+                    this.opacity = Math.random() * 0.8 + 0.2;
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+                    this.type = Math.random() > 0.7 ? 'berry' : 'sparkle';
+                    this.color = this.type === 'berry' ? 
+                        `rgba(255, 51, 85, ${this.opacity})` : 
+                        `rgba(255, 215, 0, ${this.opacity})`;
+                    this.maxLife = Math.random() * 200 + 100;
+                    this.life = this.maxLife;
+                }
+
+                update() {
+                    // Mouse interaction
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 150 && dist > 0) {
+                        const force = (150 - dist) / 150;
+                        this.x += dx / dist * force * 2;
+                        this.y += dy / dist * force * 2;
+                    }
+
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.rotation += this.rotationSpeed;
+                    this.life--;
+
+                    if (this.x < -50 || this.x > width + 50 || 
+                        this.y < -50 || this.y > height + 50 || 
+                        this.life <= 0) {
+                        this.reset();
+                    }
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    ctx.globalAlpha = this.opacity * (this.life / this.maxLife);
+                    
+                    if (this.type === 'berry') {
+                        // Draw tiny strawberry
+                        ctx.fillStyle = this.color;
+                        ctx.beginPath();
+                        ctx.ellipse(0, 0, this.size, this.size * 0.8, 0, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = '#ffd700';
+                        for (let i = 0; i < 3; i++) {
+                            ctx.beginPath();
+                            ctx.arc(Math.cos(i * 1.5) * this.size * 0.5, Math.sin(i * 1.5) * this.size * 0.4, 1.5, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                        // Leaf
+                        ctx.fillStyle = '#32cd32';
+                        ctx.beginPath();
+                        ctx.ellipse(0, -this.size * 0.7, this.size * 0.5, this.size * 0.3, 0, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else {
+                        // Sparkle
+                        ctx.fillStyle = this.color;
+                        ctx.shadowColor = '#fff';
+                        ctx.shadowBlur = 10;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size * 0.5, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Cross sparkle
+                        ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(-this.size, 0);
+                        ctx.lineTo(this.size, 0);
+                        ctx.moveTo(0, -this.size);
+                        ctx.lineTo(0, this.size);
+                        ctx.stroke();
+                    }
+                    ctx.restore();
+                }
+            }
+
+            // Initialize particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            // Mouse tracking
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    mouse.x = e.touches[0].clientX;
+                    mouse.y = e.touches[0].clientY;
+                }
+            });
+            window.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) {
+                    mouse.x = e.touches[0].clientX;
+                    mouse.y = e.touches[0].clientY;
+                }
+            });
+
+            // === Scroll Reveal Animations ===
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+            sections.forEach(section => observer.observe(section));
+
+            // === Parallax on Main Container ===
+            const mainContainer = document.getElementById('mainContainer');
+            document.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.clientX) / 40;
+                const yAxis = (window.innerHeight / 2 - e.clientY) / 60;
+                mainContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) translateY(-5px)`;
+            });
+
+            // Reset transform on mouse leave
+            document.addEventListener('mouseleave', () => {
+                mainContainer.style.transform = 'rotateY(0deg) rotateX(0deg) translateY(0)';
+            });
+
+            // === 3D Strawberry Seed Glow (extra) ===
+            const seeds = document.querySelectorAll('.strawberry-seed');
+            seeds.forEach((seed, index) => {
+                seed.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // === Add Ripple Effect on Click ===
+            document.addEventListener('click', (e) => {
+                const ripple = document.createElement('div');
+                ripple.style.position = 'fixed';
+                ripple.style.left = e.clientX - 25 + 'px';
+                ripple.style.top = e.clientY - 25 + 'px';
+                ripple.style.width = '50px';
+                ripple.style.height = '50px';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.zIndex = '9999';
+                ripple.style.animation = 'rippleEffect 0.6s ease-out forwards';
+                document.body.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+
+            // Add ripple keyframes dynamically
+            const styleSheet = document.createElement('style');
+            styleSheet.textContent = `
+                @keyframes rippleEffect {
+                    0% { transform: scale(0); opacity: 1; }
+                    100% { transform: scale(4); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+        })();
     </script>
 </body>
-  </html>
+                        </html>
