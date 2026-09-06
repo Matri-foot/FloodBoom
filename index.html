@@ -6,7 +6,6 @@
     <title>Strawberry boom · Правила</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
-        /* ========== БАЗА ========== */
         :root {
             --strawberry: #ff2d55;
             --strawberry-light: #ff6b8a;
@@ -18,10 +17,10 @@
             --leaf: #2ecc71;
             --text: #3d0c1a;
             --text-muted: #6b4a55;
-            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-bg: rgba(255, 255, 255, 0.8);
             --card-hover: rgba(255, 255, 255, 0.95);
             --border: rgba(255, 255, 255, 0.85);
-            --border-glow: rgba(255, 45, 85, 0.6);
+            --border-glow: rgba(255, 45, 85, 0.7);
             --shadow-card: 0 20px 40px -10px rgba(200, 50, 90, 0.3);
             --radius: 1.8rem;
             --transition: 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
@@ -36,8 +35,8 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #ffe4e1 0%, #ffb6c1 25%, #ff9bb3 50%, #ffb6c1 75%, #ffe4e1 100%);
-            background-size: 300% 300%;
-            animation: bgShift 12s ease infinite;
+            background-size: 400% 400%;
+            animation: bgShift 14s ease infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -46,97 +45,105 @@
             position: relative;
             overflow-x: hidden;
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         @keyframes bgShift {
             0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 50% 0%; }
             50% { background-position: 100% 50%; }
+            75% { background-position: 50% 100%; }
         }
 
-        /* ========== ПЕРЕЛИВАЮЩИЙСЯ СВЕТ ========== */
-        .bg-light {
+        /* ========== РАМКА ИЗ КЛУБНИКИ ========== */
+        .strawberry-frame {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
+            z-index: 3;
         }
 
-        .bg-light::before,
-        .bg-light::after {
-            content: '';
+        .frame-side {
             position: absolute;
-            width: 50vmax;
-            height: 50vmax;
-            border-radius: 50%;
-            filter: blur(70px);
-            opacity: 0.4;
-            animation: lightMove 14s infinite alternate ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            gap: 2rem;
+            opacity: 0.7;
+        }
+        .frame-left {
+            left: 10px;
+            top: 10%;
+            height: 80%;
+        }
+        .frame-right {
+            right: 10px;
+            top: 10%;
+            height: 80%;
+        }
+        .frame-top {
+            top: 10px;
+            left: 5%;
+            width: 90%;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .frame-bottom {
+            bottom: 10px;
+            left: 5%;
+            width: 90%;
+            flex-direction: row;
+            justify-content: space-around;
         }
 
-        .bg-light::before {
-            background: rgba(255, 255, 255, 0.7);
-            top: -20%;
-            left: -10%;
+        .frame-berry {
+            width: 45px;
+            height: 45px;
+            animation: frameFloat 4s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(255, 45, 85, 0.5));
         }
 
-        .bg-light::after {
-            background: rgba(255, 45, 85, 0.35);
-            bottom: -20%;
-            right: -10%;
-            animation-delay: 5s;
+        .frame-berry:nth-child(odd) { animation-delay: 1s; }
+        .frame-berry:nth-child(even) { animation-delay: 2s; }
+
+        @keyframes frameFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(3deg); }
         }
 
-        @keyframes lightMove {
-            0% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(6vmax, -4vmax) scale(1.15); }
-            66% { transform: translate(-4vmax, 6vmax) scale(0.92); }
-            100% { transform: translate(2vmax, 2vmax) scale(1.05); }
-        }
-
-        /* ========== ПЛАВАЮЩАЯ КЛУБНИКА (SVG) ========== */
-        .berry {
+        /* ========== СЛЕД ПРИ СКРОЛЛЕ ========== */
+        .scroll-trail {
             position: fixed;
             pointer-events: none;
-            z-index: 1;
-            animation: floatBerry 8s ease-in-out infinite;
-            filter: drop-shadow(0 8px 18px rgba(255, 45, 85, 0.4));
+            z-index: 2;
+            width: 30px;
+            height: 30px;
+            opacity: 0;
+            animation: trailFade 1.2s ease-out forwards;
         }
 
-        .berry-1 { top: 12%; left: 2%; width: 100px; height: 100px; animation-delay: 0s; }
-        .berry-2 { top: 25%; right: 4%; width: 130px; height: 130px; animation-delay: 2s; }
-        .berry-3 { bottom: 18%; left: 6%; width: 80px; height: 80px; animation-delay: 4s; }
-        .berry-4 { bottom: 28%; right: 7%; width: 110px; height: 110px; animation-delay: 6s; }
-        .berry-5 { top: 55%; left: 1%; width: 90px; height: 90px; animation-delay: 3s; }
-        .berry-6 { bottom: 5%; right: 2%; width: 100px; height: 100px; animation-delay: 1s; }
-        .berry-7 { top: 70%; left: 20%; width: 70px; height: 70px; animation-delay: 5s; }
-        .berry-8 { top: 8%; right: 20%; width: 85px; height: 85px; animation-delay: 7s; }
-        .berry-9 { bottom: 45%; left: 15%; width: 75px; height: 75px; animation-delay: 0.5s; }
-        .berry-10 { top: 40%; right: 12%; width: 95px; height: 95px; animation-delay: 2.5s; }
-
-        @keyframes floatBerry {
-            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-            25% { transform: translateY(-20px) rotate(7deg) scale(1.05); }
-            75% { transform: translateY(15px) rotate(-5deg) scale(0.95); }
+        @keyframes trailFade {
+            0% { opacity: 0.8; transform: scale(0.8) rotate(0deg); }
+            100% { opacity: 0; transform: scale(1.5) rotate(20deg); }
         }
 
         /* ========== ОСНОВНОЙ КОНТЕЙНЕР ========== */
         .main-container {
-            max-width: 900px;
+            max-width: 880px;
             width: 100%;
             background: var(--card-bg);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 2px solid var(--border);
             border-radius: var(--radius);
-            padding: 2.8rem 2.5rem 3.5rem;
-            box-shadow: var(--shadow-card), inset 0 0 30px rgba(255, 255, 255, 0.35);
+            padding: 3rem 2.5rem 4rem;
+            box-shadow: var(--shadow-card), inset 0 0 30px rgba(255, 255, 255, 0.4);
             position: relative;
             z-index: 10;
             animation: containerEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -145,7 +152,7 @@
         }
 
         .main-container:hover {
-            box-shadow: 0 25px 50px -12px rgba(255, 45, 85, 0.45), 0 0 40px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(255, 45, 85, 0.5), 0 0 40px rgba(255, 255, 255, 0.5);
         }
 
         @keyframes containerEnter {
@@ -156,7 +163,7 @@
         /* ========== ЗАГОЛОВОК ========== */
         .header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
             position: relative;
         }
 
@@ -206,7 +213,7 @@
 
         /* ========== СЕКЦИИ ========== */
         .section {
-            margin-bottom: 2.8rem;
+            margin-bottom: 3rem;
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.5s ease, transform 0.5s ease;
@@ -410,248 +417,36 @@
             .rule-card {
                 padding: 1rem;
             }
-            .berry {
-                width: 55px;
-                height: 55px;
+            .frame-berry {
+                width: 30px;
+                height: 30px;
             }
-            .berry-2 { width: 80px; height: 80px; }
-            .berry-4 { width: 75px; height: 75px; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-light"></div>
-
-    <!-- ========== ПЛАВАЮЩИЕ КЛУБНИКИ (SVG) ========== -->
-    <div class="berry berry-1">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g1" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g1)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-2">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g2" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g2)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-3">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g3" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g3)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-4">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g4" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g4)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-5">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g5" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g5)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-6">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g6" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g6)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-7">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g7" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g7)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-8">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g8" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g8)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-9">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g9" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g9)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-    <div class="berry berry-10">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-            <defs>
-                <radialGradient id="g10" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#g10)"/>
-            <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="25" r="2.5" fill="#ffd60a"/>
-            <circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-            <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="50" cy="40" r="2.5" fill="#ffd60a"/>
-            <circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-            <circle cx="35" cy="60" r="2.5" fill="#ffd60a"/>
-            <circle cx="65" cy="60" r="2.5" fill="#ffd60a"/>
-            <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C55,0 60,0 65,5 C60,5 55,8 50,10 Z" fill="#2ecc71"/>
-            <path d="M50,10 C48,2 52,2 50,10 Z" fill="#27ae60"/>
-        </svg>
+    <!-- ========== РАМКА ИЗ КЛУБНИКИ ========== -->
+    <div class="strawberry-frame">
+        <div class="frame-side frame-left">
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgl" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgl)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fg2" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fg2)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fg3" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fg3)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+        </div>
+        <div class="frame-side frame-right">
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgr1" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgr1)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgr2" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgr2)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgr3" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgr3)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+        </div>
+        <div class="frame-side frame-top">
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgt1" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgt1)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgt2" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgt2)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgt3" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgt3)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+        </div>
+        <div class="frame-side frame-bottom">
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgb1" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgb1)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgb2" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgb2)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgb3" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgb3)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
+        </div>
     </div>
 
     <!-- ========== ОСНОВНОЙ КОНТЕЙНЕР ========== -->
@@ -706,99 +501,82 @@
                 <span class="section-title-text">Основные правила</span>
             </div>
             <div class="section-content" style="padding: 1.2rem;">
-                <!-- Правило 0 -->
                 <div class="rule-card">
                     <div class="rule-title">0. Незнание правил</div>
                     <div class="rule-text">Незнание правил не освобождает от ответственности и не является оправданием за их нарушение.</div>
                 </div>
-                <!-- Правило 1 -->
                 <div class="rule-card">
                     <div class="rule-title">1. Норма активности</div>
                     <div class="rule-text">Норма – 75 сообщений в неделю. Чистка происходит каждое воскресенье в 23:00 (По МСК). 0-59 сообщений – бан. 60-74 сообщения – варн на месяц.</div>
                     <div class="rule-text"><strong>1.1.</strong> Во время «каникул» в проекте норма снижается. 0-39 – бан. 40-49 – варн на месяц. Статус проекта указывается в посте навигации с датой окончания «каникул».</div>
                 </div>
-                <!-- Правило 2 -->
                 <div class="rule-card">
                     <div class="rule-title">2. Голосовые сообщения</div>
                     <div class="rule-text">Запрещены голосовые сообщения со звуками, которые могут быть неприятны другим (рыгание, скрипы, крики, громкие внезапные звуки и т.п.). Слишком громкие войсы – просьба предупреждать заранее.</div>
                     <div class="punishment">Наказание: Варн на неделю.</div>
                 </div>
-                <!-- Правило 3 -->
                 <div class="rule-card">
                     <div class="rule-title">3. Спам и флуд</div>
                     <div class="rule-text">Запрещён спам. К нему относится: 5 и более одинаковых сообщений подряд, «лесенка», более 20 обычных сообщений подряд без реакции других участников, чрезмерное использование эмодзи, стикеров и GIF (более 7 штук без текста), флуд одинаковыми картинками.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-                <!-- Правило 4 -->
                 <div class="rule-card">
                     <div class="rule-title">4. Конфликты и ссоры</div>
                     <div class="rule-text">Ссоры, конфликты, троллинг, провокации и пассивная агрессия запрещены в чате. Все разборки решаются только в личных сообщениях. Если конфликт произошёл в чате – наказание получают все участвующие стороны.</div>
                     <div class="punishment">Наказание: варн на неделю + мут на час.</div>
                 </div>
-                <!-- Правило 5 -->
                 <div class="rule-card">
                     <div class="rule-title">5. Уважение к участникам</div>
                     <div class="rule-text">Мы приветствуем уважение ко всем участникам независимо от их сексуальной ориентации, гендерной идентичности, внешности, национальности, религии или других личных особенностей. Оскорбления, унижения, дискриминация и агрессия по любому признаку запрещены. Агрессия в ответ на чужое мнение также не приветствуется.</div>
                     <div class="punishment">Наказание: варн на месяц (или бан в тяжёлых случаях).</div>
                 </div>
-                <!-- Правило 6 -->
                 <div class="rule-card">
                     <div class="rule-title">6. Конфиденциальность и чужая информация</div>
                     <div class="rule-text">Запрещено распространение чужой личной информации и насильное нарушение конфиденциальности. Запрещено устраивать спам в чьи-то личные сообщения из-за ссоры, а так же инициировать рейды в другие проекты. Запрещено публиковать скриншоты личных переписок без согласия всех упомянутых лиц (кроме случаев нарушения правил).</div>
                     <div class="punishment">Наказание: варн на месяц.</div>
                 </div>
-                <!-- Правило 7 -->
                 <div class="rule-card">
                     <div class="rule-title">7. Запрещённая пропаганда</div>
                     <div class="rule-text">Запрещена пропаганда и поощрение: расстройств пищевого поведения (РПП), самоповреждений, самолечения, опасных диет и практик, наркотиков, алкоголя и других веществ, политических и моральных взглядов в агрессивной форме.</div>
                     <div class="punishment">Наказание: варн на месяц.</div>
                 </div>
-                <!-- Правило 8 -->
                 <div class="rule-card">
                     <div class="rule-title">8. Созывы</div>
                     <div class="rule-text">Создавать созывы (массовые упоминание) без разрешения владельца или администрации запрещено.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-                <!-- Правило 9 -->
                 <div class="rule-card">
                     <div class="rule-title">9. Реклама</div>
                     <div class="rule-text">Любая реклама без предварительного разрешения владельца запрещена (проекты в тг, ютубе и других соцсетях, даже если они не принадлежат вам). Все рекламные вопросы решаются только в личных сообщениях с владельцем.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-                <!-- Правило 10 -->
                 <div class="rule-card">
                     <div class="rule-title">10. 18+ контент</div>
                     <div class="rule-text">Порнография, gore (расчленёнка), шок-контент и чрезмерно жестокие материалы полностью запрещены.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-                <!-- Правило 11 -->
                 <div class="rule-card">
                     <div class="rule-title">11. Приветствие новичков</div>
                     <div class="rule-text">Запрещено встречать участников фразами «Фу, нью», «Выйди», «Кто это», пошлыми шутками и стикерами с подобным содержанием. Каждый, кто вступил, автоматически считается частью проекта. Такие слова могут обидеть и отпугнуть человека.</div>
                     <div class="punishment">Наказание: варн на неделю.</div>
                 </div>
-                <!-- Правило 12 -->
                 <div class="rule-card">
                     <div class="rule-title">12. Рест и просьбы</div>
                     <div class="rule-text">Просьбы поставить в рест принимаются только в личных сообщениях владельца. Просьбы в общем чате будут игнорироваться или отправлять вас заново читать правила.</div>
                 </div>
-                <!-- Правило 13 -->
                 <div class="rule-card">
                     <div class="rule-title">13. «Если не уверены»</div>
                     <div class="rule-text">Если вы хотите что-то сделать, но не знаете, разрешено ли это – лучше сначала спросить у владельца или бота. «Я не знал» не является оправданием за нарушение.</div>
                 </div>
-                <!-- Правило 14 -->
                 <div class="rule-card">
                     <div class="rule-title">14. Вступление</div>
                     <div class="rule-text">Вступить можно через личные сообщения владельца или через бот (в случае бана).</div>
                 </div>
-                <!-- Правило 15 -->
                 <div class="rule-card">
                     <div class="rule-title">15. Полномочия администрации</div>
                     <div class="rule-text">Администрация имеет право удвоить варны или выдать бан сразу, если посчитает ситуацию серьёзной.</div>
                     <div class="rule-text"><strong>15.1.</strong> Бан выдаётся после накопления пяти варнов.</div>
                 </div>
-                <!-- Правило 16 -->
                 <div class="rule-card">
                     <div class="rule-title">16. О проекте</div>
                     <div class="rule-text">Проект существует с 28 октября 2023 года. 28 апреля 2026 года началась новая эра: чат и все связанные каналы были полностью обновлены и оформлены заново.</div>
@@ -807,9 +585,59 @@
         </div>
     </div>
 
-    <!-- ========== ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ========== -->
+    <!-- ========== ЭФФЕКТ СЛЕДА ПРИ СКРОЛЛЕ ========== -->
     <script>
         (function() {
+            // Создаём след из клубничин при скролле
+            const trailContainer = document.createElement('div');
+            trailContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;';
+            document.body.appendChild(trailContainer);
+
+            function createTrailBerry(x, y) {
+                const berry = document.createElement('div');
+                berry.className = 'scroll-trail';
+                berry.style.left = (x - 15) + 'px';
+                berry.style.top = (y - 15) + 'px';
+                berry.innerHTML = `<svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <defs><radialGradient id="trailGrad" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/>
+                    </radialGradient></defs>
+                    <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#trailGrad)"/>
+                    <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
+                    <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
+                    <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
+                </svg>`;
+                trailContainer.appendChild(berry);
+                // Удаляем после завершения анимации
+                setTimeout(() => berry.remove(), 1200);
+            }
+
+            // Отслеживаем скролл (событие wheel)
+            window.addEventListener('wheel', (e) => {
+                // Создаём несколько клубничин в месте скролла
+                const x = e.clientX;
+                const y = e.clientY;
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        const offsetX = (Math.random() - 0.5) * 50;
+                        const offsetY = (Math.random() - 0.5) * 50;
+                        createTrailBerry(x + offsetX, y + offsetY);
+                    }, i * 50);
+                }
+            }, { passive: true });
+
+            // Для тач-устройств
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    const x = e.touches[0].clientX;
+                    const y = e.touches[0].clientY;
+                    if (Math.random() > 0.6) {
+                        createTrailBerry(x, y);
+                    }
+                }
+            }, { passive: true });
+
+            // Плавное появление секций
             const sections = document.querySelectorAll('.section');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -818,7 +646,6 @@
                     }
                 });
             }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-
             sections.forEach(section => observer.observe(section));
         })();
     </script>
