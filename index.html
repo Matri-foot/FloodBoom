@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --leaf-green: #6a994e;
-            --leaf-light: #a7c957;
-            --leaf-glow: #8cb369;
-            --leaf-deep: #386641;
-            --gold: #ffd60a;
             --strawberry: #ff2d55;
             --strawberry-light: #ff6b8a;
             --strawberry-glow: #ff4d6d;
             --strawberry-deep: #c9184a;
+            --gold: #ffd60a;
+            --leaf-green: #6a994e;
+            --leaf-light: #a7c957;
+            --leaf-glow: #8cb369;
+            --leaf-deep: #386641;
             --text: #2d3d1a;
             --text-muted: #4d5c3a;
             --card-bg: rgba(255, 255, 255, 0.8);
@@ -37,7 +37,7 @@
 
         body {
             font-family: 'Jost', sans-serif;
-            background: linear-gradient(var(--bg-angle), #e2f0d9 0%, #d4edda 25%, #c7e5c0 50%, #d4edda 75%, #e2f0d9 100%);
+            background: linear-gradient(var(--bg-angle), #ffe4e1 0%, #ffb6c1 25%, #ff9bb3 50%, #ffb6c1 75%, #ffe4e1 100%);
             background-size: 400% 400%;
             animation: bgShift 14s ease infinite;
             min-height: 100vh;
@@ -77,9 +77,9 @@
             position: absolute;
             width: 120px;
             height: 150px;
-            opacity: 0.35;
+            opacity: 0.4;
             animation: floatBerry 7s ease-in-out infinite;
-            filter: drop-shadow(0 10px 20px rgba(255, 45, 85, 0.25));
+            filter: drop-shadow(0 10px 20px rgba(255, 45, 85, 0.3));
             will-change: transform;
             transition: translate 0.1s linear;
         }
@@ -100,9 +100,9 @@
             height: 720px;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.15;
+            opacity: 0.12;
             animation: giantRotate 20s linear infinite, giantPulse 5s ease-in-out infinite;
-            filter: drop-shadow(0 0 60px rgba(255, 45, 85, 0.4));
+            filter: drop-shadow(0 0 60px rgba(255, 45, 85, 0.5));
         }
 
         @keyframes giantRotate {
@@ -111,8 +111,8 @@
         }
 
         @keyframes giantPulse {
-            0%, 100% { opacity: 0.15; scale: 1; }
-            50% { opacity: 0.25; scale: 1.1; }
+            0%, 100% { opacity: 0.12; scale: 1; }
+            50% { opacity: 0.22; scale: 1.1; }
         }
 
         /* ========== СЛЕД ПРИ ДВИЖЕНИИ ========== */
@@ -161,7 +161,7 @@
         }
 
         .main-container:hover {
-            box-shadow: 0 25px 50px -12px rgba(106, 153, 78, 0.5), 0 0 40px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(255, 45, 85, 0.5), 0 0 40px rgba(255, 255, 255, 0.5);
         }
 
         @keyframes containerEnter {
@@ -222,14 +222,6 @@
         /* ========== СЕКЦИИ ========== */
         .section {
             margin-bottom: 3rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .section-header {
@@ -279,7 +271,7 @@
             border: 1px solid rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            box-shadow: 0 6px 18px rgba(106, 153, 78, 0.08);
+            box-shadow: 0 6px 18px rgba(255, 45, 85, 0.08);
             transition: all var(--transition);
             position: relative;
             overflow: hidden;
@@ -305,7 +297,7 @@
 
         .section-content:hover {
             border-color: var(--border-glow);
-            box-shadow: 0 8px 25px rgba(106, 153, 78, 0.2);
+            box-shadow: 0 8px 25px rgba(255, 45, 85, 0.2);
         }
 
         /* ========== КАРТОЧКИ ПРАВИЛ ========== */
@@ -315,7 +307,7 @@
             padding: 1.3rem;
             margin-bottom: 0.7rem;
             border: 1px solid rgba(255, 255, 255, 0.9);
-            border-left: 5px solid var(--leaf-green);
+            border-left: 5px solid var(--strawberry);
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
             transition: all var(--transition);
             position: relative;
@@ -326,8 +318,8 @@
         .rule-card:hover {
             background: rgba(255, 255, 255, 0.92);
             border-left-width: 8px;
-            border-left-color: var(--leaf-glow);
-            box-shadow: 0 8px 20px rgba(106, 153, 78, 0.25);
+            border-left-color: var(--strawberry-glow);
+            box-shadow: 0 8px 20px rgba(255, 45, 85, 0.25);
             transform: translateX(6px) scale(1.005);
         }
 
@@ -749,17 +741,6 @@
                     ticking = true;
                 }
             }, { passive: true });
-
-            // ========== ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ==========
-            const sections = document.querySelectorAll('.section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-            sections.forEach(section => observer.observe(section));
         })();
     </script>
 </body>
