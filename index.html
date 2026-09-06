@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,22 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0a0a0f;
-            --bg-card: rgba(20, 20, 30, 0.75);
             --strawberry: #ff2d55;
             --strawberry-glow: #ff4d6d;
             --strawberry-deep: #c9184a;
-            --cream: #f8f0e3;
-            --milk: #fff8f0;
+            --cream: #fff8f0;
+            --milk: #fff0f5;
             --gold: #ffd60a;
             --leaf: #2ecc71;
-            --text: #f5f0eb;
-            --text-muted: #b0a8a0;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-glow: rgba(255, 45, 85, 0.5);
-            --shadow-red: 0 0 25px rgba(255, 45, 85, 0.35);
-            --shadow-card: 0 20px 40px -10px rgba(0,0,0,0.5);
-            --radius: 1.5rem;
+            --text: #3d0c1a;
+            --text-muted: #6b4a55;
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --card-hover: rgba(255, 255, 255, 0.85);
+            --border: rgba(255, 255, 255, 0.7);
+            --border-glow: rgba(255, 45, 85, 0.6);
+            --shadow-red: 0 8px 25px rgba(255, 45, 85, 0.2);
+            --shadow-card: 0 20px 40px -10px rgba(200, 50, 90, 0.25);
+            --radius: 1.8rem;
             --transition: 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
         }
 
@@ -34,7 +35,9 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: var(--bg-dark);
+            background: linear-gradient(135deg, #ffe4e1, #ffb6c1, #ff9bb3, #ffb6c1, #ffe4e1);
+            background-size: 400% 400%;
+            animation: bgShift 15s ease infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -48,28 +51,13 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* === ФОН: ГЛУБОКИЙ ГРАДИЕНТ С ГЛУБИНОЙ === */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: radial-gradient(ellipse at 30% 30%, #1e0b14 0%, #0a0a0f 50%, #050508 100%);
-            background-size: 200% 200%;
-            animation: bgSlowShift 24s ease-in-out infinite;
+        @keyframes bgShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        @keyframes bgSlowShift {
-            0%, 100% { background-position: 0% 0%; }
-            25% { background-position: 80% 20%; }
-            50% { background-position: 60% 80%; }
-            75% { background-position: 20% 60%; }
-        }
-
-        /* === СЛОЙ СВЕЧЕНИЯ КЛУБНИКИ === */
-        .strawberry-glow-layer {
+        /* Мерцающие блики */
+        .bg-sparkle {
             position: fixed;
             top: 0;
             left: 0;
@@ -77,62 +65,84 @@
             height: 100%;
             z-index: -1;
             pointer-events: none;
-            background: radial-gradient(circle at 70% 20%, rgba(255, 45, 85, 0.2) 0%, transparent 45%),
-                        radial-gradient(circle at 20% 80%, rgba(255, 45, 85, 0.12) 0%, transparent 40%);
-            filter: blur(60px);
-            animation: glowFloat 12s ease-in-out infinite alternate;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.5) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 200, 220, 0.5) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 240, 245, 0.3) 0%, transparent 60%);
+            filter: blur(40px);
+            animation: glowFloat 10s ease-in-out infinite alternate;
         }
 
         @keyframes glowFloat {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-30px, 20px) scale(1.05); }
-            100% { transform: translate(20px, -10px) scale(0.95); }
+            50% { transform: translate(-20px, 30px) scale(1.05); }
+            100% { transform: translate(15px, -20px) scale(0.95); }
         }
 
-        /* === КАНВАС ЧАСТИЦ (оптимизированный) === */
+        /* Плавающие клубнички (CSS) */
+        .floating-berry {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+            font-size: 2.5rem;
+            opacity: 0.5;
+            filter: drop-shadow(0 5px 15px rgba(255, 45, 85, 0.4));
+            animation: floatBerry 8s ease-in-out infinite;
+        }
+
+        .berry-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .berry-2 { top: 20%; right: 8%; animation-delay: 2s; font-size: 3rem; }
+        .berry-3 { bottom: 15%; left: 10%; animation-delay: 4s; font-size: 2rem; }
+        .berry-4 { bottom: 25%; right: 15%; animation-delay: 6s; }
+
+        @keyframes floatBerry {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(5deg); }
+            75% { transform: translateY(20px) rotate(-5deg); }
+        }
+
+        /* Канвас частиц */
         #particleCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 1;
             pointer-events: none;
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
-        /* === ОСНОВНОЙ КОНТЕЙНЕР === */
+        /* Основной контейнер */
         .main-container {
             max-width: 1000px;
             width: 100%;
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border);
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 2px solid var(--border);
             border-radius: 2.5rem;
             padding: 3rem 3rem 4rem;
-            box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.05);
+            box-shadow: var(--shadow-card), inset 0 0 30px rgba(255, 255, 255, 0.3);
             position: relative;
             z-index: 10;
-            animation: containerEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: containerEnter 1s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform;
-            transform-style: preserve-3d;
             transition: box-shadow 0.4s ease;
         }
 
         .main-container:hover {
-            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.7), 0 0 50px rgba(255, 45, 85, 0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+            box-shadow: 0 30px 60px -15px rgba(255, 45, 85, 0.4), 0 0 40px rgba(255, 255, 255, 0.6);
         }
 
         @keyframes containerEnter {
-            0% { opacity: 0; transform: translateY(60px) scale(0.96) rotateX(2deg); }
-            100% { opacity: 1; transform: translateY(0) scale(1) rotateX(0); }
+            0% { opacity: 0; transform: translateY(50px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* === ЗАГОЛОВОК === */
+        /* Заголовок */
         .header {
             text-align: center;
-            margin-bottom: 3.5rem;
+            margin-bottom: 3rem;
             position: relative;
         }
 
@@ -143,16 +153,15 @@
             font-size: 4.5rem;
             line-height: 1.1;
             letter-spacing: -0.01em;
-            background: linear-gradient(135deg, #fff 0%, #ffb6c1 25%, #ff2d55 50%, #ffb6c1 75%, #fff 100%);
+            background: linear-gradient(135deg, #c9184a 0%, #ff2d55 25%, #ff4d6d 50%, #ff2d55 75%, #c9184a 100%);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: titleShine 8s ease-in-out infinite, titleFloat 5s ease-in-out infinite;
-            text-shadow: 0 0 40px rgba(255, 45, 85, 0.3);
+            animation: titleShine 6s ease-in-out infinite, titleFloat 4s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(255, 45, 85, 0.5));
             position: relative;
             display: inline-block;
-            filter: drop-shadow(0 10px 20px rgba(255, 45, 85, 0.3));
         }
 
         @keyframes titleShine {
@@ -168,22 +177,22 @@
         .title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60%;
-            height: 2px;
+            width: 70%;
+            height: 3px;
             background: linear-gradient(90deg, transparent, var(--strawberry), transparent);
-            border-radius: 2px;
+            border-radius: 3px;
             animation: linePulse 3s ease-in-out infinite;
         }
 
         @keyframes linePulse {
-            0%, 100% { opacity: 0.5; width: 40%; }
-            50% { opacity: 1; width: 80%; }
+            0%, 100% { opacity: 0.6; width: 50%; }
+            50% { opacity: 1; width: 90%; }
         }
 
-        /* === СЕКЦИИ === */
+        /* Секции */
         .section {
             margin-bottom: 3rem;
             opacity: 0;
@@ -209,17 +218,16 @@
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--strawberry);
-            text-shadow: 0 0 20px rgba(255, 45, 85, 0.6);
-            opacity: 0.8;
-            transition: all 0.3s;
+            text-shadow: 0 0 20px rgba(255, 45, 85, 0.7);
+            opacity: 0.9;
         }
 
         .section-title-text {
             font-size: 1.8rem;
             font-weight: 900;
             letter-spacing: 0.5px;
-            color: var(--text);
-            position: relative;
+            color: #b3002d;
+            text-shadow: 0 0 15px rgba(255, 45, 85, 0.5);
         }
 
         .section-title-text::before {
@@ -228,20 +236,21 @@
             left: -0.5rem;
             top: 50%;
             transform: translateY(-50%);
-            width: 4px;
+            width: 5px;
             height: 70%;
             background: var(--strawberry);
-            border-radius: 4px;
+            border-radius: 5px;
             box-shadow: 0 0 15px var(--strawberry-glow);
         }
 
         .section-content {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 1.2rem;
             padding: 1.8rem;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(255, 45, 85, 0.1);
             transition: all var(--transition);
             position: relative;
             overflow: hidden;
@@ -254,9 +263,9 @@
             left: -100%;
             width: 300%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 45, 85, 0.06), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
             transform: skewX(-20deg);
-            animation: contentShine 8s infinite;
+            animation: contentShine 7s infinite;
             pointer-events: none;
         }
 
@@ -267,52 +276,36 @@
 
         .section-content:hover {
             border-color: var(--border-glow);
-            box-shadow: 0 0 30px rgba(255, 45, 85, 0.1);
+            box-shadow: 0 8px 30px rgba(255, 45, 85, 0.25);
         }
 
-        /* === КАРТОЧКИ ПРАВИЛ === */
+        /* Карточки правил */
         .rule-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 1rem;
             padding: 1.5rem;
             margin-bottom: 1rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            border-left: 4px solid var(--strawberry);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-left: 5px solid var(--strawberry);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             transition: all var(--transition);
             position: relative;
             overflow: hidden;
             will-change: transform;
         }
 
-        .rule-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 0% 0%, rgba(255, 45, 85, 0.15) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
         .rule-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-left-width: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border-left-width: 10px;
             border-left-color: var(--strawberry-glow);
-            box-shadow: 0 8px 25px -5px rgba(255, 45, 85, 0.25);
+            box-shadow: 0 10px 25px rgba(255, 45, 85, 0.3);
             transform: translateX(10px) scale(1.01);
-        }
-
-        .rule-card:hover::before {
-            opacity: 1;
         }
 
         .rule-title {
             font-weight: 700;
             font-size: 1.2rem;
-            color: #fff;
+            color: #b3002d;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
@@ -324,11 +317,11 @@
             font-size: 0.95rem;
             line-height: 1.7;
             color: var(--text-muted);
-            font-weight: 400;
+            font-weight: 500;
         }
 
         .rule-text strong {
-            color: var(--strawberry-glow);
+            color: var(--strawberry);
             font-weight: 700;
         }
 
@@ -336,19 +329,19 @@
             margin-top: 0.8rem;
             display: inline-block;
             padding: 0.3rem 1rem;
-            background: rgba(255, 45, 85, 0.15);
+            background: rgba(255, 45, 85, 0.2);
             border-radius: 2rem;
             font-weight: 600;
             font-size: 0.85rem;
-            color: var(--strawberry-glow);
-            border: 1px solid rgba(255, 45, 85, 0.3);
+            color: #b3002d;
+            border: 1px solid rgba(255, 45, 85, 0.4);
             letter-spacing: 0.3px;
             transition: all 0.3s;
         }
 
         .punishment:hover {
-            background: rgba(255, 45, 85, 0.3);
-            box-shadow: 0 0 20px rgba(255, 45, 85, 0.4);
+            background: rgba(255, 45, 85, 0.35);
+            box-shadow: 0 0 20px rgba(255, 45, 85, 0.5);
         }
 
         ul, ol {
@@ -372,9 +365,10 @@
             gap: 1rem;
             margin-top: 1rem;
             padding: 1rem;
-            background: rgba(255, 45, 85, 0.08);
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 0.8rem;
-            border: 1px solid rgba(255, 45, 85, 0.2);
+            border: 1px solid rgba(255, 45, 85, 0.3);
+            box-shadow: 0 2px 8px rgba(255, 45, 85, 0.1);
         }
 
         .info-icon {
@@ -389,7 +383,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* === АДАПТИВНОСТЬ === */
+        /* Адаптивность */
         @media (max-width: 700px) {
             .main-container {
                 padding: 2rem 1.5rem 3rem;
@@ -407,12 +401,18 @@
             .rule-card {
                 padding: 1.2rem;
             }
+            .floating-berry {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
-    <div class="strawberry-glow-layer"></div>
+    <div class="bg-sparkle"></div>
+    <div class="floating-berry berry-1">🍓</div>
+    <div class="floating-berry berry-2">🍓</div>
+    <div class="floating-berry berry-3">🍓</div>
+    <div class="floating-berry berry-4">🍓</div>
     <canvas id="particleCanvas"></canvas>
 
     <div class="main-container" id="mainContainer">
@@ -427,7 +427,7 @@
                 <span class="section-title-text">Подтверждение возраста</span>
             </div>
             <div class="section-content">
-                <p style="color: var(--text); margin-bottom: 1rem;">Перед вступлением требуется подтверждение возраста. Пришлите фото одного из документов:</p>
+                <p style="color: var(--text); margin-bottom: 1rem; font-weight: 600;">Перед вступлением требуется подтверждение возраста. Пришлите фото одного из документов:</p>
                 <ul>
                     <li>Паспорт.</li>
                     <li>Свидетельство о рождении.</li>
@@ -455,7 +455,7 @@
                 <span class="section-title-text">Цель</span>
             </div>
             <div class="section-content">
-                <p style="color: var(--text);">Цель этого флуда – приятное, безопасное и весёлое общение. Мы ценим уважение, юмор и поддержку друг друга. Любое поведение, которое портит атмосферу остальным, может быть наказано, даже если оно напрямую не прописано в правилах.</p>
+                <p style="color: var(--text); font-weight: 600;">Цель этого флуда – приятное, безопасное и весёлое общение. Мы ценим уважение, юмор и поддержку друг друга. Любое поведение, которое портит атмосферу остальным, может быть наказано, даже если оно напрямую не прописано в правилах.</p>
             </div>
         </div>
 
@@ -552,14 +552,14 @@
 
     <script>
         (function() {
-            // === ОПТИМИЗИРОВАННЫЙ CANVAS С ЧАСТИЦАМИ ===
+            // === Оптимизированный canvas с частицами ===
             const canvas = document.getElementById('particleCanvas');
             const ctx = canvas.getContext('2d');
             let width, height;
             let particles = [];
             const mouse = { x: -9999, y: -9999 };
-            const PARTICLE_COUNT = 50; // меньше — быстрее
-            const MAX_DIST = 120;
+            const PARTICLE_COUNT = 40;
+            const MAX_DIST = 100;
 
             function resizeCanvas() {
                 width = canvas.width = window.innerWidth;
@@ -576,12 +576,12 @@
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
                     this.size = Math.random() * 3 + 1.5;
-                    this.speedX = (Math.random() - 0.5) * 0.8;
-                    this.speedY = (Math.random() - 0.5) * 0.8;
-                    this.opacity = Math.random() * 0.6 + 0.2;
+                    this.speedX = (Math.random() - 0.5) * 0.7;
+                    this.speedY = (Math.random() - 0.5) * 0.7;
+                    this.opacity = Math.random() * 0.6 + 0.3;
                     this.angle = Math.random() * Math.PI * 2;
                     this.angleSpeed = (Math.random() - 0.5) * 0.02;
-                    this.type = Math.random() > 0.6 ? 'berry' : 'spark';
+                    this.type = Math.random() > 0.5 ? 'berry' : 'spark';
                     this.life = Math.random() * 300 + 100;
                     this.maxLife = this.life;
                 }
@@ -592,8 +592,8 @@
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < MAX_DIST && dist > 0) {
                         const force = (MAX_DIST - dist) / MAX_DIST;
-                        this.x += (dx / dist) * force * 1.5;
-                        this.y += (dy / dist) * force * 1.5;
+                        this.x += (dx / dist) * force * 1.2;
+                        this.y += (dy / dist) * force * 1.2;
                     }
 
                     this.x += this.speedX;
@@ -616,7 +616,6 @@
                     ctx.globalAlpha = alpha;
 
                     if (this.type === 'berry') {
-                        // Маленькая клубника
                         ctx.fillStyle = '#ff2d55';
                         ctx.beginPath();
                         ctx.ellipse(0, 0, this.size, this.size * 0.7, 0, 0, Math.PI * 2);
@@ -632,14 +631,13 @@
                         ctx.ellipse(0, -this.size * 0.6, this.size * 0.4, this.size * 0.2, 0, 0, Math.PI * 2);
                         ctx.fill();
                     } else {
-                        // Искра
                         ctx.fillStyle = '#fff';
                         ctx.shadowColor = '#ffb6c1';
                         ctx.shadowBlur = 8;
                         ctx.beginPath();
                         ctx.arc(0, 0, this.size * 0.4, 0, Math.PI * 2);
                         ctx.fill();
-                        ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+                        ctx.strokeStyle = 'rgba(255,255,255,0.7)';
                         ctx.lineWidth = 0.5;
                         ctx.beginPath();
                         ctx.moveTo(-this.size, 0);
@@ -683,7 +681,7 @@
                 }
             });
 
-            // === ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ===
+            // === Плавное появление секций ===
             const sections = document.querySelectorAll('.section');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -694,21 +692,22 @@
             }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
             sections.forEach(section => observer.observe(section));
 
-            // === ЛЁГКИЙ ПАРАЛЛАКС КОНТЕЙНЕРА ===
+            // === Лёгкий параллакс контейнера ===
             const mainContainer = document.getElementById('mainContainer');
             let rafId = null;
             document.addEventListener('mousemove', (e) => {
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(() => {
-                    const xAxis = (window.innerWidth / 2 - e.clientX) / 60;
-                    const yAxis = (window.innerHeight / 2 - e.clientY) / 80;
-                    mainContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) translateZ(0)`;
+                    const xAxis = (window.innerWidth / 2 - e.clientX) / 70;
+                    const yAxis = (window.innerHeight / 2 - e.clientY) / 90;
+                    mainContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
                 });
             });
             document.addEventListener('mouseleave', () => {
-                mainContainer.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+                mainContainer.style.transform = 'rotateY(0deg) rotateX(0deg)';
             });
         })();
     </script>
 </body>
 </html>
+```
