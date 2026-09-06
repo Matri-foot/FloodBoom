@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,19 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            --leaf-green: #6a994e;
+            --leaf-light: #a7c957;
+            --leaf-glow: #8cb369;
+            --leaf-deep: #386641;
+            --gold: #ffd60a;
             --strawberry: #ff2d55;
             --strawberry-light: #ff6b8a;
             --strawberry-glow: #ff4d6d;
             --strawberry-deep: #c9184a;
-            --gold: #ffd60a;
-            --leaf: #2ecc71;
-            --text: #3d0c1a;
-            --text-muted: #6b4a55;
+            --text: #2d3d1a;
+            --text-muted: #4d5c3a;
             --card-bg: rgba(255, 255, 255, 0.8);
             --card-hover: rgba(255, 255, 255, 0.95);
             --border: rgba(255, 255, 255, 0.85);
-            --border-glow: rgba(255, 45, 85, 0.7);
-            --shadow-card: 0 20px 40px -10px rgba(200, 50, 90, 0.3);
+            --border-glow: rgba(106, 153, 78, 0.7);
+            --shadow-card: 0 20px 40px -10px rgba(56, 102, 65, 0.3);
             --radius: 1.8rem;
             --transition: 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
             --bg-angle: 135deg;
@@ -33,7 +37,7 @@
 
         body {
             font-family: 'Jost', sans-serif;
-            background: linear-gradient(var(--bg-angle), #ffe4e1 0%, #ffb6c1 25%, #ff9bb3 50%, #ffb6c1 75%, #ffe4e1 100%);
+            background: linear-gradient(var(--bg-angle), #e2f0d9 0%, #d4edda 25%, #c7e5c0 50%, #d4edda 75%, #e2f0d9 100%);
             background-size: 400% 400%;
             animation: bgShift 14s ease infinite;
             min-height: 100vh;
@@ -73,9 +77,9 @@
             position: absolute;
             width: 120px;
             height: 150px;
-            opacity: 0.4;
+            opacity: 0.35;
             animation: floatBerry 7s ease-in-out infinite;
-            filter: drop-shadow(0 10px 20px rgba(255, 45, 85, 0.3));
+            filter: drop-shadow(0 10px 20px rgba(255, 45, 85, 0.25));
             will-change: transform;
             transition: translate 0.1s linear;
         }
@@ -98,7 +102,7 @@
             pointer-events: none;
             opacity: 0.15;
             animation: giantRotate 20s linear infinite, giantPulse 5s ease-in-out infinite;
-            filter: drop-shadow(0 0 60px rgba(255, 45, 85, 0.5));
+            filter: drop-shadow(0 0 60px rgba(255, 45, 85, 0.4));
         }
 
         @keyframes giantRotate {
@@ -157,7 +161,7 @@
         }
 
         .main-container:hover {
-            box-shadow: 0 25px 50px -12px rgba(255, 45, 85, 0.5), 0 0 40px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(106, 153, 78, 0.5), 0 0 40px rgba(255, 255, 255, 0.5);
         }
 
         @keyframes containerEnter {
@@ -178,13 +182,13 @@
             font-size: 4rem;
             line-height: 1.15;
             letter-spacing: -0.01em;
-            background: linear-gradient(135deg, #b3002d 0%, #ff2d55 30%, #ff4d6d 50%, #ff2d55 70%, #b3002d 100%);
+            background: linear-gradient(135deg, #386641 0%, #6a994e 30%, #a7c957 50%, #6a994e 70%, #386641 100%);
             background-size: 250% 250%;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             animation: titleShine 5s ease-in-out infinite, titleFloat 3.5s ease-in-out infinite;
-            filter: drop-shadow(0 6px 16px rgba(255, 45, 85, 0.5));
+            filter: drop-shadow(0 6px 16px rgba(106, 153, 78, 0.5));
             display: inline-block;
         }
 
@@ -205,7 +209,7 @@
             transform: translateX(-50%);
             width: 70%;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--strawberry), transparent);
+            background: linear-gradient(90deg, transparent, var(--leaf-green), transparent);
             border-radius: 3px;
             animation: linePulse 2.5s ease-in-out infinite;
         }
@@ -240,8 +244,8 @@
             font-family: 'Caveat', cursive;
             font-size: 2.2rem;
             font-weight: 700;
-            color: var(--strawberry);
-            text-shadow: 0 0 12px rgba(255, 45, 85, 0.6);
+            color: var(--leaf-deep);
+            text-shadow: 0 0 12px rgba(106, 153, 78, 0.6);
             opacity: 0.9;
         }
 
@@ -250,8 +254,8 @@
             font-size: 2rem;
             font-weight: 700;
             letter-spacing: 0.2px;
-            color: #b3002d;
-            text-shadow: 0 0 8px rgba(255, 45, 85, 0.25);
+            color: var(--leaf-deep);
+            text-shadow: 0 0 8px rgba(106, 153, 78, 0.25);
             position: relative;
         }
 
@@ -263,9 +267,9 @@
             transform: translateY(-50%);
             width: 4px;
             height: 65%;
-            background: var(--strawberry);
+            background: var(--leaf-green);
             border-radius: 4px;
-            box-shadow: 0 0 10px var(--strawberry-glow);
+            box-shadow: 0 0 10px var(--leaf-glow);
         }
 
         .section-content {
@@ -275,7 +279,7 @@
             border: 1px solid rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            box-shadow: 0 6px 18px rgba(255, 45, 85, 0.08);
+            box-shadow: 0 6px 18px rgba(106, 153, 78, 0.08);
             transition: all var(--transition);
             position: relative;
             overflow: hidden;
@@ -301,7 +305,7 @@
 
         .section-content:hover {
             border-color: var(--border-glow);
-            box-shadow: 0 8px 25px rgba(255, 45, 85, 0.2);
+            box-shadow: 0 8px 25px rgba(106, 153, 78, 0.2);
         }
 
         /* ========== КАРТОЧКИ ПРАВИЛ ========== */
@@ -311,7 +315,7 @@
             padding: 1.3rem;
             margin-bottom: 0.7rem;
             border: 1px solid rgba(255, 255, 255, 0.9);
-            border-left: 5px solid var(--strawberry);
+            border-left: 5px solid var(--leaf-green);
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
             transition: all var(--transition);
             position: relative;
@@ -322,8 +326,8 @@
         .rule-card:hover {
             background: rgba(255, 255, 255, 0.92);
             border-left-width: 8px;
-            border-left-color: var(--strawberry-glow);
-            box-shadow: 0 8px 20px rgba(255, 45, 85, 0.25);
+            border-left-color: var(--leaf-glow);
+            box-shadow: 0 8px 20px rgba(106, 153, 78, 0.25);
             transform: translateX(6px) scale(1.005);
         }
 
@@ -331,7 +335,7 @@
             font-family: 'Caveat', cursive;
             font-weight: 700;
             font-size: 1.6rem;
-            color: #b3002d;
+            color: var(--leaf-deep);
             margin-bottom: 0.3rem;
             letter-spacing: 0.2px;
         }
@@ -345,7 +349,7 @@
         }
 
         .rule-text strong {
-            color: var(--strawberry);
+            color: var(--leaf-green);
             font-weight: 600;
         }
 
@@ -353,20 +357,20 @@
             margin-top: 0.6rem;
             display: inline-block;
             padding: 0.25rem 0.9rem;
-            background: rgba(255, 45, 85, 0.18);
+            background: rgba(106, 153, 78, 0.18);
             border-radius: 1.5rem;
             font-weight: 600;
             font-size: 0.82rem;
-            color: #b3002d;
-            border: 1px solid rgba(255, 45, 85, 0.35);
+            color: var(--leaf-deep);
+            border: 1px solid rgba(106, 153, 78, 0.35);
             letter-spacing: 0.2px;
             transition: all 0.25s;
             font-family: 'Jost', sans-serif;
         }
 
         .punishment:hover {
-            background: rgba(255, 45, 85, 0.3);
-            box-shadow: 0 0 15px rgba(255, 45, 85, 0.4);
+            background: rgba(106, 153, 78, 0.3);
+            box-shadow: 0 0 15px rgba(106, 153, 78, 0.4);
         }
 
         ul, ol {
@@ -381,7 +385,7 @@
         }
 
         li::marker {
-            color: var(--strawberry);
+            color: var(--leaf-green);
         }
 
         .info-block {
@@ -392,13 +396,13 @@
             padding: 0.9rem;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 0.7rem;
-            border: 1px solid rgba(255, 45, 85, 0.25);
-            box-shadow: 0 2px 6px rgba(255, 45, 85, 0.08);
+            border: 1px solid rgba(106, 153, 78, 0.25);
+            box-shadow: 0 2px 6px rgba(106, 153, 78, 0.08);
         }
 
         .info-icon {
             font-size: 1.6rem;
-            color: var(--strawberry);
+            color: var(--leaf-green);
             animation: spinSlow 4s linear infinite;
             flex-shrink: 0;
         }
@@ -759,4 +763,5 @@
         })();
     </script>
 </body>
-                                                                         </html>
+</html>
+```
