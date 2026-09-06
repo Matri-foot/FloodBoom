@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Правила</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --strawberry-red: #ff3355;
+            --milkshake-pink: #ffb6c1;
+            --cream: #fff0f5;
+            --deep-pink: #ff1493;
+            --gold: #ffd700;
+            --leaf-green: #32cd32;
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --shadow: 0 8px 32px rgba(255, 51, 85, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #ffe4e1, #ffb6c1, #ff69b4, #ff1493);
+            background-size: 400% 400%;
+            animation: bgShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+            color: #4a0012;
+        }
+
+        @keyframes bgShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .floating-strawberries {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-strawberry {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp linear infinite;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 10px rgba(255, 51, 85, 0.8));
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .glitter {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: sparkle linear infinite;
+            box-shadow: 0 0 12px 2px var(--gold);
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .main-container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: var(--shadow), 0 0 60px rgba(255, 20, 147, 0.2);
+            position: relative;
+            z-index: 2;
+            animation: containerAppear 1s ease-out;
+        }
+
+        @keyframes containerAppear {
+            0% { opacity: 0; transform: scale(0.9) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .section:nth-child(1) { animation-delay: 0.2s; }
+        .section:nth-child(2) { animation-delay: 0.4s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+
+        .section-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: var(--strawberry-red);
+            text-shadow: 0 0 20px rgba(255, 51, 85, 0.8), 0 0 40px rgba(255, 20, 147, 0.5);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: titlePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 51, 85, 0.8), 0 0 40px rgba(255, 20, 147, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(255, 51, 85, 1), 0 0 60px rgba(255, 20, 147, 0.8); }
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3), 0 4px 15px rgba(255, 51, 85, 0.2);
+        }
+
+        .rule-item {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--strawberry-red);
+            animation: ruleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes ruleGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 51, 85, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(255, 20, 147, 0.6); }
+        }
+
+        .rule-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.6);
+            border-left-width: 10px;
+        }
+
+        .rule-title {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #b3002d;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rule-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4a0012;
+        }
+
+        .punishment {
+            margin-top: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 51, 85, 0.2);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: #b3002d;
+            display: inline-block;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .milkshake-emoji {
+            display: inline-block;
+            animation: bounce 1.5s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 1.5rem;
+                border-radius: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-strawberries" id="floatingStrawberries"></div>
+    <div class="glitter" style="left: 5%; animation-duration: 7s; animation-delay: 0s;"></div>
+    <div class="glitter" style="left: 15%; animation-duration: 9s; animation-delay: 1s;"></div>
+    <div class="glitter" style="left: 25%; animation-duration: 6s; animation-delay: 2s;"></div>
+    <div class="glitter" style="left: 35%; animation-duration: 8s; animation-delay: 0.5s;"></div>
+    <div class="glitter" style="left: 45%; animation-duration: 10s; animation-delay: 1.5s;"></div>
+    <div class="glitter" style="left: 55%; animation-duration: 7s; animation-delay: 2.5s;"></div>
+    <div class="glitter" style="left: 65%; animation-duration: 9s; animation-delay: 0.8s;"></div>
+    <div class="glitter" style="left: 75%; animation-duration: 6s; animation-delay: 1.8s;"></div>
+    <div class="glitter" style="left: 85%; animation-duration: 8s; animation-delay: 3s;"></div>
+    <div class="glitter" style="left: 95%; animation-duration: 11s; animation-delay: 0.3s;"></div>
+
+    <div class="main-container">
+        <div class="section age-confirmation">
+            <div class="section-title">
+                <span class="milkshake-emoji">🥤</span> Перед вступлением
+            </div>
+            <div class="section-content">
+                <p>Перед вступлением требуется подтверждение возраста. Пришлите фото одного из документов:</p>
+                <ul>
+                    <li>Паспорт.</li>
+                    <li>Свидетельство о рождении.</li>
+                    <li>Студенческий билет.</li>
+                    <li>Загранпаспорт.</li>
+                    <li>Водительское удостоверение.</li>
+                    <li>Военник.</li>
+                </ul>
+                <ol>
+                    <li>Рядом с документом положите листочек, где чётко написан ваш юзернейм и сегодняшняя дата.</li>
+                    <li>Дата рождения должна быть хорошо видна. Всё остальное можно замазать.</li>
+                    <li>Электронные версии документов не принимаются.</li>
+                </ol>
+                <p><span class="info-icon">ℹ️</span> Администрация гарантирует полную конфиденциальность всей полученной информации. Данные не передаются третьим лицам, не используются в иных целях и хранятся исключительно в закрытом доступе у владельца.</p>
+            </div>
+        </div>
+
+        <div class="section purpose">
+            <div class="section-title">
+                <span class="milkshake-emoji">🍓</span> Цель этого флуда
+            </div>
+            <div class="section-content">
+                <p>Цель этого флуда – приятное, безопасное и весёлое общение. Мы ценим уважение, юмор и поддержку друг друга. Любое поведение, которое портит атмосферу остальным, может быть наказано, даже если оно напрямую не прописано в правилах.</p>
+            </div>
+        </div>
+
+        <div class="section rules">
+            <div class="section-title">
+                <span class="milkshake-emoji">🧁</span> Основные правила
+            </div>
+            <div class="section-content">
+                <div class="rule-item">
+                    <div class="rule-title">0. Незнание правил</div>
+                    <div class="rule-text">Незнание правил не освобождает от ответственности и не является оправданием за их нарушение.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">1. Норма активности</div>
+                    <div class="rule-text">Норма – 75 сообщений в неделю. Чистка происходит каждое воскресенье в 23:00 (По МСК). 0-59 сообщений – бан. 60-74 сообщения – варн на месяц.</div>
+                    <div class="rule-text"><strong>1.1.</strong> Во время «каникул» в проекте норма снижается. 0-39 – бан. 40-49 – варн на месяц. Статус проекта указывается в посте навигации с датой окончания «каникул».</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">2. Голосовые сообщения</div>
+                    <div class="rule-text">Запрещены голосовые сообщения со звуками, которые могут быть неприятны другим (рыгание, скрипы, крики, громкие внезапные звуки и т.п.). Слишком громкие войсы – просьба предупреждать заранее.</div>
+                    <div class="punishment">Наказание: Варн на неделю.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">3. Спам и флуд</div>
+                    <div class="rule-text">Запрещён спам. К нему относится: 5 и более одинаковых сообщений подряд, «лесенка», более 20 обычных сообщений подряд без реакции других участников, чрезмерное использование эмодзи, стикеров и GIF (более 7 штук без текста), флуд одинаковыми картинками.</div>
+                    <div class="punishment">Наказание: варн на неделю.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">4. Конфликты и ссоры</div>
+                    <div class="rule-text">Ссоры, конфликты, троллинг, провокации и пассивная агрессия запрещены в чате. Все разборки решаются только в личных сообщениях. Если конфликт произошёл в чате – наказание получают все участвующие стороны.</div>
+                    <div class="punishment">Наказание: варн на неделю + мут на час.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">5. Уважение к участникам</div>
+                    <div class="rule-text">Мы приветствуем уважение ко всем участникам независимо от их сексуальной ориентации, гендерной идентичности, внешности, национальности, религии или других личных особенностей. Оскорбления, унижения, дискриминация и агрессия по любому признаку запрещены. Агрессия в ответ на чужое мнение также не приветствуется.</div>
+                    <div class="punishment">Наказание: варн на месяц (или бан в тяжёлых случаях).</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">6. Конфиденциальность и чужая информация</div>
+                    <div class="rule-text">Запрещено распространение чужой личной информации и насильное нарушение конфиденциальности. Запрещено устраивать спам в чьи-то личные сообщения из-за ссоры, а так же инициировать рейды в другие проекты. Запрещено публиковать скриншоты личных переписок без согласия всех упомянутых лиц (кроме случаев нарушения правил).</div>
+                    <div class="punishment">Наказание: варн на месяц.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">7. Запрещённая пропаганда</div>
+                    <div class="rule-text">Запрещена пропаганда и поощрение: расстройств пищевого поведения (РПП), самоповреждений, самолечения, опасных диет и практик, наркотиков, алкоголя и других веществ, политических и моральных взглядов в агрессивной форме.</div>
+                    <div class="punishment">Наказание: варн на месяц.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">8. Созывы</div>
+                    <div class="rule-text">Создавать созывы (массовые упоминание) без разрешения владельца или администрации запрещено.</div>
+                    <div class="punishment">Наказание: варн на неделю.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">9. Реклама</div>
+                    <div class="rule-text">Любая реклама без предварительного разрешения владельца запрещена (проекты в тг, ютубе и других соцсетях, даже если они не принадлежат вам). Все рекламные вопросы решаются только в личных сообщениях с владельцем.</div>
+                    <div class="punishment">Наказание: варн на неделю.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">10. 18+ контент</div>
+                    <div class="rule-text">Порнография, gore (расчленёнка), шок-контент и чрезмерно жестокие материалы полностью запрещены.</div>
+                    <div class="punishment">Наказание: варн на неделю.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">11. Приветствие новичков</div>
+                    <div class="rule-text">Запрещено встречать участников фразами «Фу, нью», «Выйди», «Кто это», пошлыми шутками и стикерами с подобным содержанием. Каждый, кто вступил, автоматически считается частью проекта. Такие слова могут обидеть и отпугнуть человека.</div>
+                    <div class="punishment">Наказание: варн на неделю.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">12. Рест и просьбы</div>
+                    <div class="rule-text">Просьбы поставить в рест принимаются только в личных сообщениях владельца. Просьбы в общем чате будут игнорироваться или отправлять вас заново читать правила.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">13. «Если не уверены»</div>
+                    <div class="rule-text">Если вы хотите что-то сделать, но не знаете, разрешено ли это – лучше сначала спросить у владельца или бота. «Я не знал» не является оправданием за нарушение.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">14. Вступление</div>
+                    <div class="rule-text">Вступить можно через личные сообщения владельца или через бот (в случае бана).</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">15. Полномочия администрации</div>
+                    <div class="rule-text">Администрация имеет право удвоить варны или выдать бан сразу, если посчитает ситуацию серьёзной.</div>
+                    <div class="rule-text"><strong>15.1.</strong> Бан выдаётся после накопления пяти варнов.</div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-title">16. О проекте</div>
+                    <div class="rule-text">Проект существует с 28 октября 2023 года. 28 апреля 2026 года началась новая эра: чат и все связанные каналы были полностью обновлены и оформлены заново.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const strawberryContainer = document.getElementById('floatingStrawberries');
+        const strawberryEmojis = ['🍓', '🍓', '🍓', '🥤', '🧁', '🍰', '🍨', '🍧'];
+        for (let i = 0; i < 15; i++) {
+            const span = document.createElement('span');
+            span.classList.add('floating-strawberry');
+            span.textContent = strawberryEmojis[Math.floor(Math.random() * strawberryEmojis.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            span.style.animationDelay = (Math.random() * 5) + 's';
+            span.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+            strawberryContainer.appendChild(span);
+        }
+    </script>
+</body>
+  </html>
