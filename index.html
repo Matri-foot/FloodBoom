@@ -3,29 +3,24 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strawberry boom · Правила</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --strawberry: #ff2d55;
-            --strawberry-light: #ff6b8a;
-            --strawberry-glow: #ff4d6d;
-            --strawberry-deep: #c9184a;
-            --gold: #ffd60a;
-            --leaf-green: #6a994e;
-            --leaf-light: #a7c957;
-            --leaf-glow: #8cb369;
-            --leaf-deep: #386641;
+            --rose: #ff2d55;
+            --rose-light: #ff6b8a;
+            --rose-glow: #ff4d6d;
+            --rose-deep: #c9184a;
+            --green: #6a994e;
+            --green-light: #a7c957;
+            --green-glow: #8cb369;
+            --green-deep: #386641;
             --text: #2d3d1a;
-            --text-muted: #4d5c3a;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --card-hover: rgba(255, 255, 255, 0.95);
-            --border: rgba(255, 255, 255, 0.85);
-            --border-glow: rgba(106, 153, 78, 0.7);
-            --shadow-card: 0 20px 40px -10px rgba(56, 102, 65, 0.3);
-            --radius: 1.8rem;
-            --transition: 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
+            --muted: #4d5c3a;
+            --card: rgba(255, 255, 255, 0.85);
+            --border: rgba(255, 255, 255, 0.9);
+            --shadow: 0 15px 35px -10px rgba(56, 102, 65, 0.2);
+            --radius: 1.5rem;
             --bg-angle: 135deg;
         }
 
@@ -36,7 +31,7 @@
         }
 
         body {
-            font-family: 'Jost', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(var(--bg-angle), #ffe4e1 0%, #ffb6c1 25%, #ff9bb3 50%, #ffb6c1 75%, #ffe4e1 100%);
             background-size: 400% 400%;
             animation: bgShift 14s ease infinite;
@@ -50,7 +45,6 @@
             color: var(--text);
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             transition: background 0.3s ease;
         }
 
@@ -61,7 +55,6 @@
             75% { background-position: 50% 100%; }
         }
 
-        /* ========== ФОНОВЫЕ КЛУБНИКИ (БОЛЬШИЕ) ========== */
         #bg-berries {
             position: fixed;
             top: 0;
@@ -77,46 +70,41 @@
             position: absolute;
             width: 120px;
             height: 150px;
-            opacity: 0.4;
+            opacity: 0.3;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120"><defs><radialGradient id="g" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="%23ff6b8a"/><stop offset="50%" stop-color="%23ff2d55"/><stop offset="100%" stop-color="%23b3002d"/></radialGradient></defs><path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100Z" fill="url(%23g)"/><circle cx="32" cy="35" r="2.5" fill="%23ffd60a"/><circle cx="50" cy="28" r="2.5" fill="%23ffd60a"/><circle cx="68" cy="35" r="2.5" fill="%23ffd60a"/><circle cx="28" cy="50" r="2.5" fill="%23ffd60a"/><circle cx="50" cy="45" r="2.5" fill="%23ffd60a"/><circle cx="72" cy="50" r="2.5" fill="%23ffd60a"/><circle cx="38" cy="65" r="2.5" fill="%23ffd60a"/><circle cx="62" cy="65" r="2.5" fill="%23ffd60a"/><path d="M50,15C45,5 40,2 35,7C40,7 45,12 50,15Z" fill="%232ecc71"/><path d="M50,15C55,5 60,2 65,7C60,7 55,12 50,15Z" fill="%232ecc71"/><path d="M50,15C48,5 52,5 50,15Z" fill="%2327ae60"/></svg>') no-repeat center/contain;
             animation: floatBerry 7s ease-in-out infinite;
-            filter: drop-shadow(0 10px 20px rgba(255, 45, 85, 0.3));
-            will-change: transform;
-            transition: translate 0.1s linear;
+            filter: drop-shadow(0 10px 20px rgba(255, 45, 85, 0.2));
         }
 
         @keyframes floatBerry {
-            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-            25% { transform: translateY(-20px) rotate(5deg) scale(1.05); }
-            75% { transform: translateY(15px) rotate(-4deg) scale(0.95); }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            75% { transform: translateY(15px) rotate(-4deg); }
         }
 
-        /* ========== МАСШТАБНАЯ ПОСТОЯННАЯ АНИМАЦИЯ: ГИГАНТСКАЯ КЛУБНИКА ========== */
         .giant-berry {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             width: 600px;
             height: 720px;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.12;
+            opacity: 0.1;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120"><defs><radialGradient id="g" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="%23ff6b8a"/><stop offset="50%" stop-color="%23ff2d55"/><stop offset="100%" stop-color="%23b3002d"/></radialGradient></defs><path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100Z" fill="url(%23g)"/><circle cx="32" cy="35" r="3" fill="%23ffd60a"/><circle cx="50" cy="28" r="3" fill="%23ffd60a"/><circle cx="68" cy="35" r="3" fill="%23ffd60a"/><circle cx="28" cy="50" r="3" fill="%23ffd60a"/><circle cx="50" cy="45" r="3" fill="%23ffd60a"/><circle cx="72" cy="50" r="3" fill="%23ffd60a"/><circle cx="38" cy="65" r="3" fill="%23ffd60a"/><circle cx="62" cy="65" r="3" fill="%23ffd60a"/><path d="M50,15C45,5 40,2 35,7C40,7 45,12 50,15Z" fill="%232ecc71"/><path d="M50,15C55,5 60,2 65,7C60,7 55,12 50,15Z" fill="%232ecc71"/><path d="M50,15C48,5 52,5 50,15Z" fill="%2327ae60"/></svg>') no-repeat center/contain;
             animation: giantRotate 20s linear infinite, giantPulse 5s ease-in-out infinite;
-            filter: drop-shadow(0 0 60px rgba(255, 45, 85, 0.5));
         }
 
         @keyframes giantRotate {
             0% { transform: translate(-50%, -50%) rotate(0deg); }
             100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
-
         @keyframes giantPulse {
-            0%, 100% { opacity: 0.12; scale: 1; }
-            50% { opacity: 0.22; scale: 1.1; }
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
         }
 
-        /* ========== СЛЕД ПРИ ДВИЖЕНИИ ========== */
-        #trail-container {
+        #trail {
             position: fixed;
             top: 0;
             left: 0;
@@ -131,357 +119,187 @@
             position: absolute;
             width: 28px;
             height: 35px;
-            opacity: 0.85;
+            opacity: 0.8;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120"><defs><radialGradient id="g" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="%23ff6b8a"/><stop offset="50%" stop-color="%23ff2d55"/><stop offset="100%" stop-color="%23b3002d"/></radialGradient></defs><path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100Z" fill="url(%23g)"/><circle cx="32" cy="35" r="2" fill="%23ffd60a"/><circle cx="50" cy="28" r="2" fill="%23ffd60a"/><circle cx="68" cy="35" r="2" fill="%23ffd60a"/><circle cx="28" cy="50" r="2" fill="%23ffd60a"/><circle cx="50" cy="45" r="2" fill="%23ffd60a"/><circle cx="72" cy="50" r="2" fill="%23ffd60a"/><path d="M50,15C45,5 40,2 35,7C40,7 45,12 50,15Z" fill="%232ecc71"/><path d="M50,15C55,5 60,2 65,7C60,7 55,12 50,15Z" fill="%232ecc71"/></svg>') no-repeat center/contain;
             animation: trailFade 1.2s ease-out forwards;
-            will-change: transform, opacity;
-            pointer-events: none;
         }
 
         @keyframes trailFade {
-            0% { opacity: 0.85; transform: scale(0.7) rotate(0deg); }
+            0% { opacity: 0.8; transform: scale(0.7) rotate(0deg); }
             100% { opacity: 0; transform: scale(1.6) rotate(15deg); }
         }
 
-        /* ========== ОСНОВНОЙ КОНТЕЙНЕР ========== */
         .main-container {
             max-width: 880px;
             width: 100%;
-            background: var(--card-bg);
+            background: var(--card);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 2px solid var(--border);
             border-radius: var(--radius);
-            padding: 3rem 2.5rem 4rem;
-            box-shadow: var(--shadow-card), inset 0 0 30px rgba(255, 255, 255, 0.4);
+            padding: 3rem 2.5rem 3.5rem;
+            box-shadow: var(--shadow);
             position: relative;
             z-index: 10;
-            animation: containerEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform;
-            transition: box-shadow 0.35s ease;
-        }
-
-        .main-container:hover {
-            box-shadow: 0 25px 50px -12px rgba(255, 45, 85, 0.5), 0 0 40px rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes containerEnter {
-            0% { opacity: 0; transform: translateY(35px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* ========== ЗАГОЛОВОК ========== */
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
         }
 
         .title {
-            font-family: 'Caveat', cursive;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 3.8rem;
             font-weight: 700;
-            font-size: 4rem;
-            line-height: 1.15;
-            letter-spacing: -0.01em;
-            background: linear-gradient(135deg, #386641 0%, #6a994e 30%, #a7c957 50%, #6a994e 70%, #386641 100%);
-            background-size: 250% 250%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: titleShine 5s ease-in-out infinite, titleFloat 3.5s ease-in-out infinite;
-            filter: drop-shadow(0 6px 16px rgba(106, 153, 78, 0.5));
-            display: inline-block;
+            color: var(--green-deep);
+            letter-spacing: -0.02em;
         }
 
-        @keyframes titleShine {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        @keyframes titleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--leaf-green), transparent);
-            border-radius: 3px;
-            animation: linePulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes linePulse {
-            0%, 100% { opacity: 0.5; width: 50%; }
-            50% { opacity: 1; width: 85%; }
-        }
-
-        /* ========== СЕКЦИИ ========== */
         .section {
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
         .section-header {
             display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            margin-bottom: 1.2rem;
-            position: relative;
+            align-items: baseline;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
         }
 
-        .section-number {
-            font-family: 'Caveat', cursive;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--leaf-deep);
-            text-shadow: 0 0 12px rgba(106, 153, 78, 0.6);
-            opacity: 0.9;
-        }
-
-        .section-title-text {
-            font-family: 'Caveat', cursive;
+        .section-num {
             font-size: 2rem;
             font-weight: 700;
-            letter-spacing: 0.2px;
-            color: var(--leaf-deep);
-            text-shadow: 0 0 8px rgba(106, 153, 78, 0.25);
-            position: relative;
+            color: var(--green);
         }
 
-        .section-title-text::before {
-            content: '';
-            position: absolute;
-            left: -0.35rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 65%;
-            background: var(--leaf-green);
-            border-radius: 4px;
-            box-shadow: 0 0 10px var(--leaf-glow);
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--green-deep);
         }
 
         .section-content {
             background: rgba(255, 255, 255, 0.55);
-            border-radius: 1.1rem;
-            padding: 1.7rem;
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            box-shadow: 0 6px 18px rgba(255, 45, 85, 0.08);
-            transition: all var(--transition);
-            position: relative;
-            overflow: hidden;
+            border-radius: 1rem;
+            padding: 1.6rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
         }
 
-        .section-content::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 300%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transform: skewX(-20deg);
-            animation: contentShine 6s infinite;
-            pointer-events: none;
-        }
-
-        @keyframes contentShine {
-            0% { left: -100%; }
-            60%, 100% { left: 200%; }
-        }
-
-        .section-content:hover {
-            border-color: var(--border-glow);
-            box-shadow: 0 8px 25px rgba(255, 45, 85, 0.2);
-        }
-
-        /* ========== КАРТОЧКИ ПРАВИЛ ========== */
-        .rule-card {
-            background: rgba(255, 255, 255, 0.75);
-            border-radius: 0.9rem;
-            padding: 1.3rem;
-            margin-bottom: 0.7rem;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            border-left: 5px solid var(--strawberry);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
-            transition: all var(--transition);
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-        }
-
-        .rule-card:hover {
-            background: rgba(255, 255, 255, 0.92);
-            border-left-width: 8px;
-            border-left-color: var(--strawberry-glow);
-            box-shadow: 0 8px 20px rgba(255, 45, 85, 0.25);
-            transform: translateX(6px) scale(1.005);
-        }
-
-        .rule-title {
-            font-family: 'Caveat', cursive;
-            font-weight: 700;
-            font-size: 1.6rem;
-            color: var(--leaf-deep);
-            margin-bottom: 0.3rem;
-            letter-spacing: 0.2px;
-        }
-
-        .rule-text {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .rule-text strong {
-            color: var(--leaf-green);
+        .section-content p {
             font-weight: 600;
-        }
-
-        .punishment {
-            margin-top: 0.6rem;
-            display: inline-block;
-            padding: 0.25rem 0.9rem;
-            background: rgba(106, 153, 78, 0.18);
-            border-radius: 1.5rem;
-            font-weight: 600;
-            font-size: 0.82rem;
-            color: var(--leaf-deep);
-            border: 1px solid rgba(106, 153, 78, 0.35);
-            letter-spacing: 0.2px;
-            transition: all 0.25s;
-            font-family: 'Jost', sans-serif;
-        }
-
-        .punishment:hover {
-            background: rgba(106, 153, 78, 0.3);
-            box-shadow: 0 0 15px rgba(106, 153, 78, 0.4);
+            color: var(--text);
         }
 
         ul, ol {
-            margin-left: 1.5rem;
-            margin-bottom: 0.8rem;
-            color: var(--text-muted);
-            font-family: 'Jost', sans-serif;
+            margin-left: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--muted);
         }
 
         li {
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
         }
 
         li::marker {
-            color: var(--leaf-green);
+            color: var(--green);
         }
 
         .info-block {
             display: flex;
-            align-items: flex-start;
             gap: 0.8rem;
             margin-top: 1rem;
             padding: 0.9rem;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 0.7rem;
-            border: 1px solid rgba(106, 153, 78, 0.25);
-            box-shadow: 0 2px 6px rgba(106, 153, 78, 0.08);
+            border: 1px solid rgba(106, 153, 78, 0.3);
         }
 
         .info-icon {
             font-size: 1.6rem;
-            color: var(--leaf-green);
-            animation: spinSlow 4s linear infinite;
+            color: var(--green);
             flex-shrink: 0;
         }
 
-        @keyframes spinSlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .rule-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            margin-bottom: 0.7rem;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-left: 4px solid var(--green);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
+            transition: background 0.2s, border-left-width 0.2s;
         }
 
-        /* ========== АДАПТИВНОСТЬ ========== */
-        @media (max-width: 700px) {
+        .rule-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border-left-width: 6px;
+        }
+
+        .rule-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--green-deep);
+            margin-bottom: 0.25rem;
+        }
+
+        .rule-text {
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        .rule-text strong {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .punishment {
+            margin-top: 0.5rem;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: rgba(106, 153, 78, 0.15);
+            border-radius: 1.2rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--green-deep);
+            border: 1px solid rgba(106, 153, 78, 0.3);
+        }
+
+        @media (max-width: 600px) {
             .main-container {
-                padding: 1.8rem 1.2rem 2.2rem;
-                border-radius: 1.5rem;
+                padding: 1.8rem 1.2rem;
+                border-radius: 1.2rem;
             }
             .title {
                 font-size: 2.5rem;
             }
-            .section-title-text {
-                font-size: 1.6rem;
-            }
-            .section-number {
-                font-size: 1.8rem;
-            }
-            .rule-title {
+            .section-title {
                 font-size: 1.4rem;
+            }
+            .section-num {
+                font-size: 1.6rem;
             }
             .rule-card {
                 padding: 1rem;
-            }
-            .bg-berry {
-                width: 80px;
-                height: 100px;
-            }
-            .giant-berry {
-                width: 300px;
-                height: 360px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ========== МАСШТАБНАЯ ПОСТОЯННАЯ АНИМАЦИЯ: ГИГАНТСКАЯ КЛУБНИКА ========== -->
-    <div class="giant-berry" id="giantBerry">
-        <svg viewBox="0 0 100 120" width="100%" height="100%">
-            <defs>
-                <radialGradient id="giantGrad" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stop-color="#ff6b8a"/>
-                    <stop offset="50%" stop-color="#ff2d55"/>
-                    <stop offset="100%" stop-color="#b3002d"/>
-                </radialGradient>
-            </defs>
-            <path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100 Z" fill="url(#giantGrad)"/>
-            <circle cx="32" cy="35" r="3" fill="#ffd60a"/>
-            <circle cx="50" cy="28" r="3" fill="#ffd60a"/>
-            <circle cx="68" cy="35" r="3" fill="#ffd60a"/>
-            <circle cx="28" cy="50" r="3" fill="#ffd60a"/>
-            <circle cx="50" cy="45" r="3" fill="#ffd60a"/>
-            <circle cx="72" cy="50" r="3" fill="#ffd60a"/>
-            <circle cx="38" cy="65" r="3" fill="#ffd60a"/>
-            <circle cx="62" cy="65" r="3" fill="#ffd60a"/>
-            <path d="M50,15 C45,5 40,2 35,7 C40,7 45,12 50,15 Z" fill="#2ecc71"/>
-            <path d="M50,15 C55,5 60,2 65,7 C60,7 55,12 50,15 Z" fill="#2ecc71"/>
-            <path d="M50,15 C48,5 52,5 50,15 Z" fill="#27ae60"/>
-        </svg>
-    </div>
-
-    <!-- ========== ФОНОВЫЕ КЛУБНИКИ (ГЕНЕРИРУЮТСЯ JS) ========== -->
+    <div class="giant-berry"></div>
     <div id="bg-berries"></div>
+    <div id="trail"></div>
 
-    <!-- ========== КОНТЕЙНЕР ДЛЯ СЛЕДА ========== -->
-    <div id="trail-container"></div>
+    <div class="main-container">
+        <h1 class="title">Strawberry boom</h1>
 
-    <!-- ========== ОСНОВНОЙ КОНТЕЙНЕР ========== -->
-    <div class="main-container" id="mainContainer">
-        <div class="header">
-            <h1 class="title">Strawberry boom</h1>
-        </div>
-
-        <!-- Секция 1: Подтверждение возраста -->
-        <div class="section" id="ageSection">
+        <div class="section">
             <div class="section-header">
-                <span class="section-number">01</span>
-                <span class="section-title-text">Подтверждение возраста</span>
+                <span class="section-num">01</span>
+                <span class="section-title">Подтверждение возраста</span>
             </div>
             <div class="section-content">
-                <p style="color: var(--text); margin-bottom: 1rem; font-weight: 600; font-family: 'Jost', sans-serif;">Перед вступлением требуется подтверждение возраста. Пришлите фото одного из документов:</p>
+                <p>Перед вступлением требуется подтверждение возраста. Пришлите фото одного из документов:</p>
                 <ul>
                     <li>Паспорт.</li>
                     <li>Свидетельство о рождении.</li>
@@ -497,29 +315,27 @@
                 </ol>
                 <div class="info-block">
                     <span class="info-icon">ℹ️</span>
-                    <p style="font-family: 'Jost', sans-serif;">Администрация гарантирует полную конфиденциальность всей полученной информации. Данные не передаются третьим лицам, не используются в иных целях и хранятся исключительно в закрытом доступе у владельца.</p>
+                    <p>Администрация гарантирует полную конфиденциальность всей полученной информации. Данные не передаются третьим лицам, не используются в иных целях и хранятся исключительно в закрытом доступе у владельца.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Секция 2: Цель -->
-        <div class="section" id="purposeSection">
+        <div class="section">
             <div class="section-header">
-                <span class="section-number">02</span>
-                <span class="section-title-text">Цель</span>
+                <span class="section-num">02</span>
+                <span class="section-title">Цель</span>
             </div>
             <div class="section-content">
-                <p style="color: var(--text); font-weight: 600; font-family: 'Jost', sans-serif;">Цель этого флуда – приятное, безопасное и весёлое общение. Мы ценим уважение, юмор и поддержку друг друга. Любое поведение, которое портит атмосферу остальным, может быть наказано, даже если оно напрямую не прописано в правилах.</p>
+                <p>Цель этого флуда – приятное, безопасное и весёлое общение. Мы ценим уважение, юмор и поддержку друг друга. Любое поведение, которое портит атмосферу остальным, может быть наказано, даже если оно напрямую не прописано в правилах.</p>
             </div>
         </div>
 
-        <!-- Секция 3: Основные правила -->
-        <div class="section" id="rulesSection">
+        <div class="section">
             <div class="section-header">
-                <span class="section-number">03</span>
-                <span class="section-title-text">Основные правила</span>
+                <span class="section-num">03</span>
+                <span class="section-title">Основные правила</span>
             </div>
-            <div class="section-content" style="padding: 1.2rem;">
+            <div class="section-content">
                 <div class="rule-card">
                     <div class="rule-title">0. Незнание правил</div>
                     <div class="rule-text">Незнание правил не освобождает от ответственности и не является оправданием за их нарушение.</div>
@@ -606,138 +422,44 @@
 
     <script>
         (function() {
-            // ========== ГЕНЕРАЦИЯ ФОНОВЫХ КЛУБНИК (БОЛЬШИХ) ==========
             const bgContainer = document.getElementById('bg-berries');
-            const berryCount = 14;
-
-            const berrySVG = `
-                <svg viewBox="0 0 100 120" width="100%" height="100%">
-                    <defs>
-                        <radialGradient id="bgGrad" cx="30%" cy="30%" r="70%">
-                            <stop offset="0%" stop-color="#ff6b8a"/>
-                            <stop offset="50%" stop-color="#ff2d55"/>
-                            <stop offset="100%" stop-color="#b3002d"/>
-                        </radialGradient>
-                    </defs>
-                    <path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100 Z" fill="url(#bgGrad)"/>
-                    <circle cx="32" cy="35" r="2.5" fill="#ffd60a"/>
-                    <circle cx="50" cy="28" r="2.5" fill="#ffd60a"/>
-                    <circle cx="68" cy="35" r="2.5" fill="#ffd60a"/>
-                    <circle cx="28" cy="50" r="2.5" fill="#ffd60a"/>
-                    <circle cx="50" cy="45" r="2.5" fill="#ffd60a"/>
-                    <circle cx="72" cy="50" r="2.5" fill="#ffd60a"/>
-                    <circle cx="38" cy="65" r="2.5" fill="#ffd60a"/>
-                    <circle cx="62" cy="65" r="2.5" fill="#ffd60a"/>
-                    <path d="M50,15 C45,5 40,2 35,7 C40,7 45,12 50,15 Z" fill="#2ecc71"/>
-                    <path d="M50,15 C55,5 60,2 65,7 C60,7 55,12 50,15 Z" fill="#2ecc71"/>
-                    <path d="M50,15 C48,5 52,5 50,15 Z" fill="#27ae60"/>
-                </svg>`;
-
-            for (let i = 0; i < berryCount; i++) {
-                const berry = document.createElement('div');
-                berry.className = 'bg-berry';
-                berry.innerHTML = berrySVG;
-                berry.style.left = Math.random() * 100 + '%';
-                berry.style.top = Math.random() * 100 + '%';
-                berry.style.animationDelay = (Math.random() * 6) + 's';
-                berry.style.animationDuration = (7 + Math.random() * 6) + 's';
-                berry.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.8 + Math.random() * 0.5})`;
-                berry.dataset.parallax = (0.2 + Math.random() * 0.3).toFixed(2);
-                bgContainer.appendChild(berry);
+            const berrySVG = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120"><defs><radialGradient id="g" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="%23ff6b8a"/><stop offset="50%" stop-color="%23ff2d55"/><stop offset="100%" stop-color="%23b3002d"/></radialGradient></defs><path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100Z" fill="url(%23g)"/><circle cx="32" cy="35" r="2.5" fill="%23ffd60a"/><circle cx="50" cy="28" r="2.5" fill="%23ffd60a"/><circle cx="68" cy="35" r="2.5" fill="%23ffd60a"/><circle cx="28" cy="50" r="2.5" fill="%23ffd60a"/><circle cx="50" cy="45" r="2.5" fill="%23ffd60a"/><circle cx="72" cy="50" r="2.5" fill="%23ffd60a"/><circle cx="38" cy="65" r="2.5" fill="%23ffd60a"/><circle cx="62" cy="65" r="2.5" fill="%23ffd60a"/><path d="M50,15C45,5 40,2 35,7C40,7 45,12 50,15Z" fill="%232ecc71"/><path d="M50,15C55,5 60,2 65,7C60,7 55,12 50,15Z" fill="%232ecc71"/><path d="M50,15C48,5 52,5 50,15Z" fill="%2327ae60"/></svg>';
+            for (let i = 0; i < 14; i++) {
+                const el = document.createElement('div');
+                el.className = 'bg-berry';
+                el.style.left = Math.random() * 100 + '%';
+                el.style.top = Math.random() * 100 + '%';
+                el.style.animationDelay = (Math.random() * 6) + 's';
+                el.style.background = `url('${berrySVG}') no-repeat center/contain`;
+                bgContainer.appendChild(el);
             }
 
-            // ========== ПАРАЛЛАКС ФОНОВЫХ КЛУБНИК ==========
-            const bgBerries = document.querySelectorAll('.bg-berry');
-            let mouseX = 0, mouseY = 0;
-            let isParallaxActive = false;
-
-            function updateParallax() {
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                const deltaX = (mouseX - centerX) / centerX;
-                const deltaY = (mouseY - centerY) / centerY;
-
-                bgBerries.forEach(berry => {
-                    const factor = parseFloat(berry.dataset.parallax);
-                    const shiftX = deltaX * 30 * factor;
-                    const shiftY = deltaY * 30 * factor;
-                    berry.style.translate = `${shiftX}px ${shiftY}px`;
-                });
-
-                isParallaxActive = false;
-            }
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                if (!isParallaxActive) {
-                    requestAnimationFrame(updateParallax);
-                    isParallaxActive = true;
-                }
-            });
-
-            // ========== СЛЕД ИЗ МЕЛКИХ КЛУБНИЧИН ПРИ ДВИЖЕНИИ ==========
-            const trailContainer = document.getElementById('trail-container');
-            let lastTrailTime = 0;
-            const TRAIL_INTERVAL = 30;
-
-            function createTrailBerry(x, y) {
+            const trail = document.getElementById('trail');
+            let lastTime = 0;
+            function createTrail(x, y) {
                 const now = Date.now();
-                if (now - lastTrailTime < TRAIL_INTERVAL) return;
-                lastTrailTime = now;
-
-                const berry = document.createElement('div');
-                berry.className = 'trail-berry';
-                berry.innerHTML = `
-                    <svg viewBox="0 0 100 120" width="100%" height="100%">
-                        <defs>
-                            <radialGradient id="trailGrad" cx="30%" cy="30%" r="70%">
-                                <stop offset="0%" stop-color="#ff6b8a"/>
-                                <stop offset="50%" stop-color="#ff2d55"/>
-                                <stop offset="100%" stop-color="#b3002d"/>
-                            </radialGradient>
-                        </defs>
-                        <path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100 Z" fill="url(#trailGrad)"/>
-                        <circle cx="32" cy="35" r="2" fill="#ffd60a"/>
-                        <circle cx="50" cy="28" r="2" fill="#ffd60a"/>
-                        <circle cx="68" cy="35" r="2" fill="#ffd60a"/>
-                        <circle cx="28" cy="50" r="2" fill="#ffd60a"/>
-                        <circle cx="50" cy="45" r="2" fill="#ffd60a"/>
-                        <circle cx="72" cy="50" r="2" fill="#ffd60a"/>
-                        <path d="M50,15 C45,5 40,2 35,7 C40,7 45,12 50,15 Z" fill="#2ecc71"/>
-                        <path d="M50,15 C55,5 60,2 65,7 C60,7 55,12 50,15 Z" fill="#2ecc71"/>
-                    </svg>`;
-                berry.style.left = (x - 15) + 'px';
-                berry.style.top = (y - 19) + 'px';
-                trailContainer.appendChild(berry);
-                setTimeout(() => berry.remove(), 1200);
+                if (now - lastTime < 30) return;
+                lastTime = now;
+                const el = document.createElement('div');
+                el.className = 'trail-berry';
+                el.style.left = (x - 15) + 'px';
+                el.style.top = (y - 19) + 'px';
+                trail.appendChild(el);
+                setTimeout(() => el.remove(), 1200);
             }
+            window.addEventListener('mousemove', e => createTrail(e.clientX, e.clientY));
+            window.addEventListener('touchmove', e => { if (e.touches.length > 0) createTrail(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
 
-            window.addEventListener('mousemove', (e) => {
-                createTrailBerry(e.clientX, e.clientY);
-            }, { passive: true });
-
-            window.addEventListener('touchmove', (e) => {
-                if (e.touches.length > 0) {
-                    createTrailBerry(e.touches[0].clientX, e.touches[0].clientY);
-                }
-            }, { passive: true });
-
-            // ========== ПЕРЕЛИВАНИЕ ФОНА ПРИ ПРОКРУТКЕ ==========
             let ticking = false;
-
-            function updateBackground() {
-                const scrollY = window.scrollY;
-                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
-                const angle = 135 + progress * 180;
-                document.body.style.setProperty('--bg-angle', angle + 'deg');
+            function updateBg() {
+                const max = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = max > 0 ? window.scrollY / max : 0;
+                document.body.style.setProperty('--bg-angle', (135 + progress * 180) + 'deg');
                 ticking = false;
             }
-
             window.addEventListener('scroll', () => {
                 if (!ticking) {
-                    window.requestAnimationFrame(updateBackground);
+                    requestAnimationFrame(updateBg);
                     ticking = true;
                 }
             }, { passive: true });
