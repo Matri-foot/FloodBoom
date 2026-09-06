@@ -11,8 +11,6 @@
             --strawberry-light: #ff6b8a;
             --strawberry-glow: #ff4d6d;
             --strawberry-deep: #c9184a;
-            --milk: #fff0f5;
-            --cream: #fff8f0;
             --gold: #ffd60a;
             --leaf: #2ecc71;
             --text: #3d0c1a;
@@ -24,6 +22,7 @@
             --shadow-card: 0 20px 40px -10px rgba(200, 50, 90, 0.3);
             --radius: 1.8rem;
             --transition: 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
+            --bg-angle: 135deg;
         }
 
         * {
@@ -34,7 +33,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #ffe4e1 0%, #ffb6c1 25%, #ff9bb3 50%, #ffb6c1 75%, #ffe4e1 100%);
+            background: linear-gradient(var(--bg-angle), #ffe4e1 0%, #ffb6c1 25%, #ff9bb3 50%, #ffb6c1 75%, #ffe4e1 100%);
             background-size: 400% 400%;
             animation: bgShift 14s ease infinite;
             min-height: 100vh;
@@ -48,6 +47,7 @@
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background 0.3s ease;
         }
 
         @keyframes bgShift {
@@ -57,80 +57,59 @@
             75% { background-position: 50% 100%; }
         }
 
-        /* ========== РАМКА ИЗ КЛУБНИКИ ========== */
-        .strawberry-frame {
+        /* ========== ФОНОВЫЕ КЛУБНИКИ ========== */
+        #bg-berries {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 3;
+            z-index: 0;
+            overflow: hidden;
         }
 
-        .frame-side {
+        .bg-berry {
             position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-            gap: 2rem;
-            opacity: 0.7;
-        }
-        .frame-left {
-            left: 10px;
-            top: 10%;
-            height: 80%;
-        }
-        .frame-right {
-            right: 10px;
-            top: 10%;
-            height: 80%;
-        }
-        .frame-top {
-            top: 10px;
-            left: 5%;
-            width: 90%;
-            flex-direction: row;
-            justify-content: space-around;
-        }
-        .frame-bottom {
-            bottom: 10px;
-            left: 5%;
-            width: 90%;
-            flex-direction: row;
-            justify-content: space-around;
-        }
-
-        .frame-berry {
-            width: 45px;
+            width: 35px;
             height: 45px;
-            animation: frameFloat 4s ease-in-out infinite;
-            filter: drop-shadow(0 4px 8px rgba(255, 45, 85, 0.5));
+            opacity: 0.5;
+            animation: floatBerry 7s ease-in-out infinite;
+            filter: drop-shadow(0 4px 6px rgba(255, 45, 85, 0.3));
+            will-change: transform;
         }
 
-        .frame-berry:nth-child(odd) { animation-delay: 1s; }
-        .frame-berry:nth-child(even) { animation-delay: 2s; }
-
-        @keyframes frameFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-6px) rotate(3deg); }
+        @keyframes floatBerry {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-12px) rotate(5deg) scale(1.05); }
+            75% { transform: translateY(8px) rotate(-4deg) scale(0.95); }
         }
 
-        /* ========== СЛЕД ПРИ СКРОЛЛЕ ========== */
-        .scroll-trail {
+        /* ========== СЛЕД ПРИ ДВИЖЕНИИ ========== */
+        #trail-container {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            z-index: 2;
-            width: 30px;
-            height: 30px;
-            opacity: 0;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .trail-berry {
+            position: absolute;
+            width: 20px;
+            height: 25px;
+            opacity: 0.8;
             animation: trailFade 1.2s ease-out forwards;
+            will-change: transform, opacity;
+            pointer-events: none;
         }
 
         @keyframes trailFade {
-            0% { opacity: 0.8; transform: scale(0.8) rotate(0deg); }
-            100% { opacity: 0; transform: scale(1.5) rotate(20deg); }
+            0% { opacity: 0.8; transform: scale(0.7) rotate(0deg); }
+            100% { opacity: 0; transform: scale(1.4) rotate(15deg); }
         }
 
         /* ========== ОСНОВНОЙ КОНТЕЙНЕР ========== */
@@ -417,37 +396,15 @@
             .rule-card {
                 padding: 1rem;
             }
-            .frame-berry {
-                width: 30px;
-                height: 30px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- ========== РАМКА ИЗ КЛУБНИКИ ========== -->
-    <div class="strawberry-frame">
-        <div class="frame-side frame-left">
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgl" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgl)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fg2" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fg2)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fg3" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fg3)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-        </div>
-        <div class="frame-side frame-right">
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgr1" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgr1)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgr2" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgr2)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgr3" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgr3)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-        </div>
-        <div class="frame-side frame-top">
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgt1" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgt1)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgt2" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgt2)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgt3" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgt3)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-        </div>
-        <div class="frame-side frame-bottom">
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgb1" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgb1)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgb2" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgb2)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-            <div class="frame-berry"><svg viewBox="0 0 100 100" width="100%" height="100%"><defs><radialGradient id="fgb3" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/></radialGradient></defs><path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#fgb3)"/><circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/><circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/><path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/></svg></div>
-        </div>
-    </div>
+    <!-- ========== ФОНОВЫЕ КЛУБНИКИ (ГЕНЕРИРУЮТСЯ JS) ========== -->
+    <div id="bg-berries"></div>
+
+    <!-- ========== КОНТЕЙНЕР ДЛЯ СЛЕДА ========== -->
+    <div id="trail-container"></div>
 
     <!-- ========== ОСНОВНОЙ КОНТЕЙНЕР ========== -->
     <div class="main-container" id="mainContainer">
@@ -585,59 +542,119 @@
         </div>
     </div>
 
-    <!-- ========== ЭФФЕКТ СЛЕДА ПРИ СКРОЛЛЕ ========== -->
     <script>
         (function() {
-            // Создаём след из клубничин при скролле
-            const trailContainer = document.createElement('div');
-            trailContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;';
-            document.body.appendChild(trailContainer);
+            // ========== ГЕНЕРАЦИЯ ФОНОВЫХ КЛУБНИК ==========
+            const bgContainer = document.getElementById('bg-berries');
+            const berryCount = 25;
+
+            // SVG для клубники (вытянутая форма)
+            const berrySVG = `
+                <svg viewBox="0 0 100 120" width="100%" height="100%">
+                    <defs>
+                        <radialGradient id="bgGrad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#ff6b8a"/>
+                            <stop offset="50%" stop-color="#ff2d55"/>
+                            <stop offset="100%" stop-color="#b3002d"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100 Z" fill="url(#bgGrad)"/>
+                    <circle cx="32" cy="35" r="2.5" fill="#ffd60a"/>
+                    <circle cx="50" cy="28" r="2.5" fill="#ffd60a"/>
+                    <circle cx="68" cy="35" r="2.5" fill="#ffd60a"/>
+                    <circle cx="28" cy="50" r="2.5" fill="#ffd60a"/>
+                    <circle cx="50" cy="45" r="2.5" fill="#ffd60a"/>
+                    <circle cx="72" cy="50" r="2.5" fill="#ffd60a"/>
+                    <circle cx="38" cy="65" r="2.5" fill="#ffd60a"/>
+                    <circle cx="62" cy="65" r="2.5" fill="#ffd60a"/>
+                    <path d="M50,15 C45,5 40,2 35,7 C40,7 45,12 50,15 Z" fill="#2ecc71"/>
+                    <path d="M50,15 C55,5 60,2 65,7 C60,7 55,12 50,15 Z" fill="#2ecc71"/>
+                    <path d="M50,15 C48,5 52,5 50,15 Z" fill="#27ae60"/>
+                </svg>`;
+
+            for (let i = 0; i < berryCount; i++) {
+                const berry = document.createElement('div');
+                berry.className = 'bg-berry';
+                berry.innerHTML = berrySVG;
+                berry.style.left = Math.random() * 100 + '%';
+                berry.style.top = Math.random() * 100 + '%';
+                berry.style.animationDelay = (Math.random() * 6) + 's';
+                berry.style.animationDuration = (6 + Math.random() * 6) + 's';
+                berry.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.7 + Math.random() * 0.6})`;
+                bgContainer.appendChild(berry);
+            }
+
+            // ========== СЛЕД ИЗ МЕЛКИХ КЛУБНИЧИН ПРИ ДВИЖЕНИИ ==========
+            const trailContainer = document.getElementById('trail-container');
+            let lastTrailTime = 0;
+            const TRAIL_INTERVAL = 40; // мс
 
             function createTrailBerry(x, y) {
+                const now = Date.now();
+                if (now - lastTrailTime < TRAIL_INTERVAL) return;
+                lastTrailTime = now;
+
                 const berry = document.createElement('div');
-                berry.className = 'scroll-trail';
-                berry.style.left = (x - 15) + 'px';
-                berry.style.top = (y - 15) + 'px';
-                berry.innerHTML = `<svg viewBox="0 0 100 100" width="100%" height="100%">
-                    <defs><radialGradient id="trailGrad" cx="30%" cy="30%" r="70%">
-                        <stop offset="0%" stop-color="#ff6b8a"/><stop offset="50%" stop-color="#ff2d55"/><stop offset="100%" stop-color="#b3002d"/>
-                    </radialGradient></defs>
-                    <path d="M50,80 C20,80 10,60 15,40 C20,20 35,10 50,10 C65,10 80,20 85,40 C90,60 80,80 50,80 Z" fill="url(#trailGrad)"/>
-                    <circle cx="30" cy="30" r="2.5" fill="#ffd60a"/><circle cx="50" cy="25" r="2.5" fill="#ffd60a"/><circle cx="70" cy="30" r="2.5" fill="#ffd60a"/>
-                    <circle cx="25" cy="45" r="2.5" fill="#ffd60a"/><circle cx="50" cy="40" r="2.5" fill="#ffd60a"/><circle cx="75" cy="45" r="2.5" fill="#ffd60a"/>
-                    <path d="M50,10 C45,0 40,0 35,5 C40,5 45,8 50,10 Z" fill="#2ecc71"/>
-                </svg>`;
+                berry.className = 'trail-berry';
+                berry.innerHTML = `
+                    <svg viewBox="0 0 100 120" width="100%" height="100%">
+                        <defs>
+                            <radialGradient id="trailGrad" cx="30%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#ff6b8a"/>
+                                <stop offset="50%" stop-color="#ff2d55"/>
+                                <stop offset="100%" stop-color="#b3002d"/>
+                            </radialGradient>
+                        </defs>
+                        <path d="M50,100 C25,100 12,80 15,55 C18,30 32,15 50,15 C68,15 82,30 85,55 C88,80 75,100 50,100 Z" fill="url(#trailGrad)"/>
+                        <circle cx="32" cy="35" r="2" fill="#ffd60a"/>
+                        <circle cx="50" cy="28" r="2" fill="#ffd60a"/>
+                        <circle cx="68" cy="35" r="2" fill="#ffd60a"/>
+                        <circle cx="28" cy="50" r="2" fill="#ffd60a"/>
+                        <circle cx="50" cy="45" r="2" fill="#ffd60a"/>
+                        <circle cx="72" cy="50" r="2" fill="#ffd60a"/>
+                        <path d="M50,15 C45,5 40,2 35,7 C40,7 45,12 50,15 Z" fill="#2ecc71"/>
+                        <path d="M50,15 C55,5 60,2 65,7 C60,7 55,12 50,15 Z" fill="#2ecc71"/>
+                    </svg>`;
+                berry.style.left = (x - 10) + 'px';
+                berry.style.top = (y - 12) + 'px';
                 trailContainer.appendChild(berry);
-                // Удаляем после завершения анимации
                 setTimeout(() => berry.remove(), 1200);
             }
 
-            // Отслеживаем скролл (событие wheel)
-            window.addEventListener('wheel', (e) => {
-                // Создаём несколько клубничин в месте скролла
-                const x = e.clientX;
-                const y = e.clientY;
-                for (let i = 0; i < 5; i++) {
-                    setTimeout(() => {
-                        const offsetX = (Math.random() - 0.5) * 50;
-                        const offsetY = (Math.random() - 0.5) * 50;
-                        createTrailBerry(x + offsetX, y + offsetY);
-                    }, i * 50);
-                }
+            // Обработчики движения мыши и пальца
+            window.addEventListener('mousemove', (e) => {
+                createTrailBerry(e.clientX, e.clientY);
             }, { passive: true });
 
-            // Для тач-устройств
             window.addEventListener('touchmove', (e) => {
                 if (e.touches.length > 0) {
-                    const x = e.touches[0].clientX;
-                    const y = e.touches[0].clientY;
-                    if (Math.random() > 0.6) {
-                        createTrailBerry(x, y);
-                    }
+                    createTrailBerry(e.touches[0].clientX, e.touches[0].clientY);
                 }
             }, { passive: true });
 
-            // Плавное появление секций
+            // ========== ПЕРЕЛИВАНИЕ ФОНА ПРИ ПРОКРУТКЕ ==========
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+
+            function updateBackground() {
+                const scrollY = window.scrollY;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+                const angle = 135 + progress * 180; // меняем угол градиента
+                const hueShift = progress * 30; // можно менять оттенок, но оставим только угол
+
+                document.body.style.setProperty('--bg-angle', angle + 'deg');
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateBackground);
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            // ========== ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ==========
             const sections = document.querySelectorAll('.section');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -650,4 +667,4 @@
         })();
     </script>
 </body>
-    </html>
+</html>
